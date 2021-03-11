@@ -9,6 +9,6 @@ export const fetchHotels = () => (
   _getState: () => StoreState,
   api: AxiosInstance
 ): Promise<void> =>
-  api.get(`/hotels`).then(({ data }: { data: Hotel[] }) => {
+  api.get<Hotel[]>(`/hotels`).then(({ data }) => {
     dispatch(ActionCreator.loadHotels(data));
   });

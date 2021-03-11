@@ -15,9 +15,15 @@ interface AppProps {
 }
 
 const App = ({ hotels, fetchHotels }: AppProps): JSX.Element => {
+  const [loadingFlag, setLoadingFlag] = React.useState(true);
+
   React.useEffect((): void => {
-    fetchHotels();
+    fetchHotels().then(() => setLoadingFlag(false));
   }, []);
+
+  if (loadingFlag) {
+    return <div>LOADING...</div>;
+  }
 
   return (
     <BrowserRouter>
