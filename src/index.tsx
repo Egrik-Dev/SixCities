@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 import { createApi } from "./api";
 import App from "./components/App/App";
 import rootReducer from "./reducers/root-reducer";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const root = document.querySelector(`#root`);
 
@@ -12,10 +13,8 @@ export const api = createApi(() => console.log(`No Unauthorized`));
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk.withExtraArgument(api))
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)))
 );
-
-console.log(store);
 
 ReactDOM.render(
   <Provider store={store}>
