@@ -1,10 +1,13 @@
 import React from "react";
+import { Hotel } from "../../actions/action";
 
 interface MainProps {
-  quantityOffers: number;
+  hotels: Hotel[];
 }
 
-export const Main = ({ quantityOffers }: MainProps): JSX.Element => {
+export const Main = (props: MainProps): JSX.Element => {
+  const { hotels } = props;
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -83,7 +86,7 @@ export const Main = ({ quantityOffers }: MainProps): JSX.Element => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {quantityOffers} places to stay in Amsterdam
+                {hotels.length} places to stay in Amsterdam
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
