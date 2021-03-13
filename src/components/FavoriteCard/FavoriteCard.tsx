@@ -1,43 +1,51 @@
-import React from "react";
-import { Hotel } from "../../actions/action";
 import { calculateRating } from "../../utils";
+import { Hotel } from "../../actions/action";
 
-interface AppProps {
+interface OwnProps {
   hotel: Hotel;
-  onHoverHandler: (hotel: Hotel) => void;
 }
 
-const OfferCard = (props: AppProps): JSX.Element => {
-  const { hotel } = props;
-  const { preview_image, title, price, rating, type } = hotel;
+export const FavoriteCard = (props: OwnProps) => {
+  const {
+    title,
+    price,
+    is_favorite,
+    rating,
+    type,
+    preview_image,
+  } = props.hotel;
 
   return (
-    <article
-      className="cities__place-card place-card"
-      onMouseEnter={() => props.onHoverHandler(hotel)}
-    >
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article className="favorites__card place-card">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
             className="place-card__image"
             src={preview_image}
-            width="260"
-            height="200"
+            width="150"
+            height="110"
             alt={title}
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            className={
+              is_favorite
+                ? `place-card__bookmark-button place-card__bookmark-button--active button`
+                : `place-card__bookmark-button button`
+            }
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -54,5 +62,3 @@ const OfferCard = (props: AppProps): JSX.Element => {
     </article>
   );
 };
-
-export default React.memo(OfferCard);

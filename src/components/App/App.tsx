@@ -9,10 +9,15 @@ import { fetchHotels } from "../../actions/action-api";
 import { StoreState } from "../../reducers/root-reducer";
 import { Hotel } from "../../actions/action";
 
-interface AppProps {
+type AppStateProps = {
   hotels: Hotel[];
+};
+
+type AppDispatchProps = {
   fetchHotels: Function;
-}
+};
+
+type AppProps = AppStateProps & AppDispatchProps;
 
 const App = ({ hotels, fetchHotels }: AppProps): JSX.Element => {
   const [loadingFlag, setLoadingFlag] = React.useState(true);
@@ -35,10 +40,10 @@ const App = ({ hotels, fetchHotels }: AppProps): JSX.Element => {
           <Login />
         </Route>
         <Route exact path="/favorites">
-          <Favorites />
+          <Favorites hotels={hotels} />
         </Route>
         <Route exact path="/offer/:id">
-          <Room />
+          <Room hotel={hotels[2]} />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -50,4 +55,7 @@ const mapStateToProps = ({ hotels }: StoreState): { hotels: Hotel[] } => {
 };
 
 export { App };
-export default connect(mapStateToProps, { fetchHotels })(App);
+export default connect<AppStateProps, AppDispatchProps, {}, StoreState>(
+  mapStateToProps,
+  { fetchHotels }
+)(App);

@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 
 const TIMEOUT = 5000;
-const BACKEND_URL = `https://4.react.pages.academy/six-cities`;
+const BACKEND_URL = `https://6.react.pages.academy/six-cities`;
 const UNAUTHORIZED = 401;
 
 export function createApi(onUnauthorized: () => void): AxiosInstance {
