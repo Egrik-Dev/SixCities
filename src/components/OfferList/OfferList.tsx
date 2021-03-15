@@ -10,6 +10,7 @@ const START_QUANTITY_OFFERS = 4;
 
 export const OfferList = (props: OfferListProps) => {
   const { hotels } = props;
+  const classNameMainPage = `cities__place-card place-card`;
 
   const [activeOffer, setActiveOffer] = React.useState<null | Hotel>(null);
   const [startOffers, SetStartOffers] = React.useState<[] | Hotel[]>([]);
@@ -26,7 +27,12 @@ export const OfferList = (props: OfferListProps) => {
     <div className="cities__places-list places__list tabs__content">
       {startOffers.map(
         (hotel: Hotel, i: number): JSX.Element => (
-          <OfferCard key={i} hotel={hotel} onHoverHandler={onHoverHandler} />
+          <OfferCard
+            key={i}
+            hotel={hotel}
+            onHoverHandler={onHoverHandler}
+            className={classNameMainPage}
+          />
         )
       )}
     </div>

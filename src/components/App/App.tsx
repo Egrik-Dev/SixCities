@@ -43,7 +43,7 @@ const App = ({ hotels, fetchHotels }: AppProps): JSX.Element => {
           <Favorites hotels={hotels} />
         </Route>
         <Route exact path="/offer/:id">
-          <Room hotel={hotels[2]} />
+          <Room hotel={hotels[2]} hotels={hotels} />
         </Route>
       </Switch>
     </BrowserRouter>

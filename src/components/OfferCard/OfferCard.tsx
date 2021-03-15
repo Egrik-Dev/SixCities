@@ -1,23 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Hotel } from "../../actions/action";
 import { calculateRating } from "../../utils";
 
 interface AppProps {
   hotel: Hotel;
-  onHoverHandler: (hotel: Hotel) => void;
+  onHoverHandler?: (hotel: Hotel) => void;
+  className: string;
 }
 
 const OfferCard = (props: AppProps): JSX.Element => {
   const { hotel } = props;
   const { preview_image, title, price, rating, type } = hotel;
+  const { className } = props;
 
   return (
     <article
-      className="cities__place-card place-card"
-      onMouseEnter={() => props.onHoverHandler(hotel)}
+      className={className}
+      onMouseEnter={() => props.onHoverHandler && props.onHoverHandler(hotel)}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`/offer/4`}>
           <img
             className="place-card__image"
             src={preview_image}
@@ -25,7 +28,7 @@ const OfferCard = (props: AppProps): JSX.Element => {
             height="200"
             alt={title}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -47,7 +50,7 @@ const OfferCard = (props: AppProps): JSX.Element => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/4`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

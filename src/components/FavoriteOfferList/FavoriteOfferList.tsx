@@ -1,4 +1,3 @@
-import React from "react";
 import { Hotel } from "../../actions/action";
 import { FavoriteCard } from "../FavoriteCard/FavoriteCard";
 
@@ -7,7 +6,7 @@ interface OwnProps {
   city: string;
 }
 
-export const FavoriteOfferList = (props: OwnProps) => {
+export const FavoriteOfferList = (props: OwnProps): JSX.Element => {
   const { hotels, city } = props;
 
   const filterOffersByCity = (hotels: Hotel[]): Hotel[] => {
