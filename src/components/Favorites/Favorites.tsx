@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Hotel } from "../../actions/action";
 import { FavoriteOfferList } from "../FavoriteOfferList/FavoriteOfferList";
+import { AppRoute } from "../../const";
 
 type OwnStateProps = {
   hotels: Hotel[];
@@ -34,7 +35,7 @@ export const Favorites = (props: OwnStateProps): JSX.Element => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to={`/`}>
+              <Link className="header__logo-link" to={AppRoute.ROOT}>
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -49,7 +50,7 @@ export const Favorites = (props: OwnStateProps): JSX.Element => {
                 <li className="header__nav-item user">
                   <Link
                     className="header__nav-link header__nav-link--profile"
-                    to={`/favorites`}
+                    to={AppRoute.FAVORITES}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
@@ -73,7 +74,10 @@ export const Favorites = (props: OwnStateProps): JSX.Element => {
                   <li key={i} className="favorites__locations-items">
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
-                        <Link className="locations__item-link" to={`/`}>
+                        <Link
+                          className="locations__item-link"
+                          to={AppRoute.ROOT}
+                        >
                           <span>{city}</span>
                         </Link>
                       </div>
@@ -93,7 +97,7 @@ export const Favorites = (props: OwnStateProps): JSX.Element => {
         </div>
       </main>
       <footer className="footer container">
-        <Link className="footer__logo-link" to={`/`}>
+        <Link className="footer__logo-link" to={AppRoute.ROOT}>
           <img
             className="footer__logo"
             src="img/logo.svg"

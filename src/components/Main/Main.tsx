@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Hotel } from "../../actions/action";
 import { OfferList } from "../OfferList/OfferList";
 import { Map } from "../Map/Map";
+import { AppRoute } from "../../const";
 
 interface MainProps {
   hotels: Hotel[];
@@ -31,7 +32,7 @@ export const Main = (props: MainProps): JSX.Element => {
                 <li className="header__nav-item user">
                   <Link
                     className="header__nav-link header__nav-link--profile"
-                    to={`/favorites`}
+                    to={AppRoute.FAVORITES}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">

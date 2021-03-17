@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { fetchHotels } from "../../actions/action-api";
 import { StoreState } from "../../reducers/root-reducer";
 import { Hotel } from "../../actions/action";
+import { AppRoute } from "../../const";
 
 type AppStateProps = {
   hotels: Hotel[];
@@ -33,18 +34,22 @@ const App = ({ hotels, fetchHotels }: AppProps): JSX.Element => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={AppRoute.ROOT}>
           <Main hotels={hotels} />
         </Route>
-        <Route exact path="/login">
+        <Route exact path={AppRoute.LOGIN}>
           <Login />
         </Route>
-        <Route exact path="/favorites">
+        <Route exact path={AppRoute.FAVORITES}>
           <Favorites hotels={hotels} />
         </Route>
-        <Route exact path="/offer/:id">
-          <Room hotel={hotels[2]} hotels={hotels} />
-        </Route>
+        <Route
+          exact
+          path={`${AppRoute.OFFER}/:id`}
+          render={(offerProps: any) => (
+            <Room hotels={hotels} id={offerProps.match.params.id} />
+          )}
+        />
       </Switch>
     </BrowserRouter>
   );

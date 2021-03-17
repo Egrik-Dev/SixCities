@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Hotel } from "../../actions/action";
 import { calculateRating } from "../../utils";
+import { AppRoute } from "../../const";
 
 interface AppProps {
   hotel: Hotel;
@@ -20,7 +21,7 @@ const OfferCard = (props: AppProps): JSX.Element => {
       onMouseEnter={() => props.onHoverHandler && props.onHoverHandler(hotel)}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/4`}>
+        <Link to={`${AppRoute.OFFER}/${hotel.id}`}>
           <img
             className="place-card__image"
             src={preview_image}
@@ -50,7 +51,7 @@ const OfferCard = (props: AppProps): JSX.Element => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/4`}>{title}</Link>
+          <Link to={`${AppRoute.OFFER}/${hotel.id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

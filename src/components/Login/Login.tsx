@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { AppRoute } from "../../const";
 
 export const Login = (): JSX.Element => {
   return (
@@ -7,7 +8,7 @@ export const Login = (): JSX.Element => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to={`/`}>
+              <Link className="header__logo-link" to={AppRoute.ROOT}>
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -66,7 +67,7 @@ export const Login = (): JSX.Element => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={`/`}>
+              <Link className="locations__item-link" to={AppRoute.ROOT}>
                 <span>Amsterdam</span>
               </Link>
             </div>

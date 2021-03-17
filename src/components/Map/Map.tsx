@@ -47,7 +47,18 @@ export const Map = (props: OwnProps): JSX.Element => {
         hotel.location.latitude,
         hotel.location.longitude,
       ];
-      leaflet.marker(offerCords, { icon }).addTo(map);
+      leaflet
+        .marker(offerCords, { icon })
+        .addTo(map)
+        .bindPopup(
+          `
+        <div style="text-align: center">
+          ${hotel.title}<br>
+          ${hotel.type}
+        </div>
+        `
+        )
+        .openPopup();
     });
   });
 

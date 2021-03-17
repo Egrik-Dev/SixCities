@@ -1,18 +1,32 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { Hotel } from "../../actions/action";
 import { calculateRating } from "../../utils";
 import { OfferImage } from "../OfferImage/OfferImage";
 import { NearbyHotelsList } from "../NearbyHotelsList/NearbyHotelsList";
 import { NewComment } from "../NewComment/NewComment";
+import { AppRoute } from "../../const";
 
 type OwnProps = {
-  hotel: Hotel;
   hotels: Hotel[];
+  id: string;
 };
 
 const MAX_OFFER_IMAGES = 6;
 
 export const Room = (props: OwnProps): JSX.Element => {
+  const { hotels, id } = props;
+
+  const [hotel, setHotel] = React.useState<Hotel>();
+
+  React.useEffect(() => {
+    setHotel(hotels.find((hotel: Hotel): boolean => hotel.id === Number(id)));
+  });
+
+  if (!hotel) {
+    return <div>Film not found</div>;
+  }
+
   const {
     images,
     title,
@@ -24,10 +38,9 @@ export const Room = (props: OwnProps): JSX.Element => {
     price,
     goods,
     description,
-  } = props.hotel;
+  } = hotel;
 
-  const { avatar_url, name, is_pro } = props.hotel.host;
-  const { hotels } = props;
+  const { avatar_url, name, is_pro } = hotel.host;
 
   const offerImages = images.slice(0, MAX_OFFER_IMAGES);
 
@@ -37,7 +50,7 @@ export const Room = (props: OwnProps): JSX.Element => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to={`/`}>
+              <Link className="header__logo-link" to={AppRoute.ROOT}>
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -52,7 +65,7 @@ export const Room = (props: OwnProps): JSX.Element => {
                 <li className="header__nav-item user">
                   <Link
                     className="header__nav-link header__nav-link--profile"
-                    to={`/favorites`}
+                    to={AppRoute.FAVORITES}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
