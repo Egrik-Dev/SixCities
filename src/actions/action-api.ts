@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosResponse } from "axios";
 import { Action } from "./types";
-import { Hotel, ActionCreator } from "./action";
+import { Hotel, ActionCreator, Reviews } from "./action";
 import { StoreState } from "../reducers/root-reducer";
 
 export const fetchHotels = () => (
@@ -12,3 +12,9 @@ export const fetchHotels = () => (
   api.get<Hotel[]>(`/hotels`).then(({ data }) => {
     dispatch(ActionCreator.loadHotels(data));
   });
+
+export const fetchReviews = (id: string) => (
+  _dispatch: Dispatch,
+  _getState: () => StoreState,
+  api: AxiosInstance
+): Promise<AxiosResponse> => api.get(`/comments/${id}`);

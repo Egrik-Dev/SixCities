@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Main } from "../Main/Main";
 import { Login } from "../Login/Login";
 import { Favorites } from "../Favorites/Favorites";
-import { Room } from "../Room/Room";
+import Room from "../Room/Room";
 import { connect } from "react-redux";
 import { fetchHotels } from "../../actions/action-api";
 import { StoreState } from "../../reducers/root-reducer";
