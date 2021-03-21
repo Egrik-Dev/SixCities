@@ -18,3 +18,9 @@ export const fetchReviews = (id: string) => (
   _getState: () => StoreState,
   api: AxiosInstance
 ): Promise<AxiosResponse> => api.get(`/comments/${id}`);
+
+export const fetchNearbyHotels = (id: string) => (
+  _dispatch: Dispatch,
+  _getState: () => StoreState,
+  api: AxiosInstance
+): Promise<AxiosResponse> => api.get(`/hotels/${id}/nearby`);

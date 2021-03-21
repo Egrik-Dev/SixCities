@@ -5,7 +5,8 @@ import { calculateRating } from "../../utils";
 import { OfferImage } from "../OfferImage/OfferImage";
 import { NearbyHotelsList } from "../NearbyHotelsList/NearbyHotelsList";
 import { NewComment } from "../NewComment/NewComment";
-import { fetchReviews } from "../../actions/action-api";
+import { Map } from "../Map/Map";
+import { fetchReviews, fetchNearbyHotels } from "../../actions/action-api";
 import { AppRoute } from "../../const";
 import { connect } from "react-redux";
 import { ReviewsList } from "../ReviewsList/ReviewsList";
@@ -17,6 +18,7 @@ type OwnProps = {
 
 type AppDispatchProps = {
   fetchReviews: Function; // ToDo: Разобраться как затипизировать
+  fetchNearbyHotels: Function;
 };
 
 type AppProps = OwnProps & AppDispatchProps;
@@ -24,14 +26,15 @@ type AppProps = OwnProps & AppDispatchProps;
 const MAX_OFFER_IMAGES = 6;
 
 const Room = (props: AppProps): JSX.Element => {
-  const { hotels, id, fetchReviews } = props;
-
-  const [hotel, setHotel] = React.useState<Hotel>();
-  const [reviews, setReviews] = React.useState<Reviews[]>([]);
+  const { hotels, id, fetchReviews, fetchNearbyHotels } = props;
 
   const raiseOnTheTop = () => {
     window.scrollTo(0, 0);
   };
+
+  const [hotel, setHotel] = React.useState<Hotel>();
+  const [reviews, setReviews] = React.useState<Reviews[]>([]);
+  const [nearbyHotels, setNearbyHotels] = React.useState<Hotel[]>();
 
   React.useEffect(() => {
     raiseOnTheTop();
@@ -40,7 +43,13 @@ const Room = (props: AppProps): JSX.Element => {
 
   React.useEffect(() => {
     fetchReviews(id).then(({ data }: { data: Reviews[] }) => setReviews(data));
-  });
+  }, [fetchReviews, id]);
+
+  React.useEffect(() => {
+    fetchNearbyHotels(id).then(({ data }: { data: Hotel[] }) =>
+      setNearbyHotels(data)
+    );
+  }, [fetchNearbyHotels, id]);
 
   if (!hotel) {
     return <div>Film not found</div>;
@@ -199,14 +208,18 @@ const Room = (props: AppProps): JSX.Element => {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            {nearbyHotels ? (
+              <Map hotels={nearbyHotels} city={hotel.city.location} />
+            ) : null}
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <NearbyHotelsList hotels={hotels} />
+            {nearbyHotels ? <NearbyHotelsList hotels={nearbyHotels} /> : null}
           </section>
         </div>
       </main>
@@ -221,4 +234,5 @@ const mapStateToProps = () => {
 export { Room };
 export default connect<{}, AppDispatchProps, {}, {}>(mapStateToProps, {
   fetchReviews,
+  fetchNearbyHotels,
 })(Room);

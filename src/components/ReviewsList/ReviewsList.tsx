@@ -16,7 +16,15 @@ export const ReviewsList = (props: OwnProps) => {
         Reviews &middot;{``}
         <span className="reviews__amount">{quantityReviews}</span>
       </h2>
-      <Review reviews={reviews} />
+      <ul className="reviews__list">
+        {reviews.map(
+          (review: Reviews, i: number): JSX.Element => (
+            <li className="reviews__item" key={i}>
+              <Review review={review} />
+            </li>
+          )
+        )}
+      </ul>
     </>
   );
 };

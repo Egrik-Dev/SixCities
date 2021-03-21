@@ -11,6 +11,15 @@ interface MainProps {
 export const Main = (props: MainProps): JSX.Element => {
   const { hotels } = props;
 
+  // Временная фильтрация
+  const filterByAmsterdam = (allHotels: Hotel[]): Hotel[] => {
+    return allHotels.filter(
+      (hotel: Hotel): boolean => hotel.city.name === `Amsterdam`
+    );
+  };
+
+  const amsterdamHotels = filterByAmsterdam(hotels);
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -121,7 +130,12 @@ export const Main = (props: MainProps): JSX.Element => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map hotels={hotels} />
+                {hotels ? (
+                  <Map
+                    hotels={amsterdamHotels}
+                    city={hotels[0].city.location}
+                  />
+                ) : null}
               </section>
             </div>
           </div>
