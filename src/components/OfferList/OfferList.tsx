@@ -8,11 +8,10 @@ interface OfferListProps {
 
 const START_QUANTITY_OFFERS = 4;
 
-export const OfferList = (props: OfferListProps) => {
-  const { hotels } = props;
+export const OfferList = ({ hotels }: OfferListProps) => {
   const classNameMainPage = `cities__place-card place-card`;
 
-  const [activeOffer, setActiveOffer] = React.useState<null | Hotel>(null);
+  const [activeOffer, setActiveOffer] = React.useState<null | Hotel>();
   const [startOffers, SetStartOffers] = React.useState<[] | Hotel[]>([]);
 
   React.useEffect((): void => {

@@ -10,15 +10,17 @@ interface AppProps {
   className: string;
 }
 
-const OfferCard = (props: AppProps): JSX.Element => {
-  const { hotel } = props;
+const OfferCard = ({
+  hotel,
+  className,
+  onHoverHandler,
+}: AppProps): JSX.Element => {
   const { preview_image, title, price, rating, type } = hotel;
-  const { className } = props;
 
   return (
     <article
       className={className}
-      onMouseEnter={() => props.onHoverHandler && props.onHoverHandler(hotel)}
+      onMouseEnter={() => onHoverHandler && onHoverHandler(hotel)}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.OFFER}/${hotel.id}`}>

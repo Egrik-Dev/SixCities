@@ -10,9 +10,7 @@ type OwnStateProps = {
 
 const QUANTITY_FAVORITE_OFFERS = 10;
 
-export const Favorites = (props: OwnStateProps): JSX.Element => {
-  const { hotels } = props;
-
+export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
   const [favoriteOffers, SetFavoriteOffers] = React.useState<[] | Hotel[]>([]);
 
   const getFavoriteCities = (favoriteHotels: Hotel[]): string[] => {

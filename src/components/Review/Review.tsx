@@ -6,9 +6,7 @@ type OwnProps = {
   review: Reviews;
 };
 
-export const Review = (props: OwnProps) => {
-  const { review } = props;
-
+export const Review = ({ review }: OwnProps) => {
   const getDate = (date: Date): string => {
     const formattedDate = new Date(Date.parse(String(date)));
     const year = formattedDate.getFullYear();

@@ -8,9 +8,7 @@ interface MainProps {
   hotels: Hotel[];
 }
 
-export const Main = (props: MainProps): JSX.Element => {
-  const { hotels } = props;
-
+export const Main = ({ hotels }: MainProps): JSX.Element => {
   // Временная фильтрация
   const filterByAmsterdam = (allHotels: Hotel[]): Hotel[] => {
     return allHotels.filter(
@@ -130,12 +128,12 @@ export const Main = (props: MainProps): JSX.Element => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                {hotels ? (
+                {hotels && (
                   <Map
                     hotels={amsterdamHotels}
                     city={hotels[0].city.location}
                   />
-                ) : null}
+                )}
               </section>
             </div>
           </div>

@@ -3,10 +3,10 @@ type OwnProps = {
   title: string;
 };
 
-export const OfferImage = (props: OwnProps) => {
+export const OfferImage = ({ image, title }: OwnProps) => {
   return (
     <div className="property__image-wrapper">
-      <img className="property__image" src={props.image} alt={props.title} />
+      <img className="property__image" src={image} alt={title} />
     </div>
   );
 };

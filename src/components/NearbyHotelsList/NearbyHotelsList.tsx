@@ -6,8 +6,7 @@ interface OfferListProps {
   hotels: Hotel[];
 }
 
-export const NearbyHotelsList = (props: OfferListProps) => {
-  const { hotels } = props;
+export const NearbyHotelsList = ({ hotels }: OfferListProps) => {
   const classNameMainPage = `near-places__card place-card`;
 
   return (

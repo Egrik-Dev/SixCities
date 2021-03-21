@@ -25,9 +25,12 @@ type AppProps = OwnProps & AppDispatchProps;
 
 const MAX_OFFER_IMAGES = 6;
 
-const Room = (props: AppProps): JSX.Element => {
-  const { hotels, id, fetchReviews, fetchNearbyHotels } = props;
-
+const Room = ({
+  hotels,
+  id,
+  fetchReviews,
+  fetchNearbyHotels,
+}: AppProps): JSX.Element => {
   const raiseOnTheTop = () => {
     window.scrollTo(0, 0);
   };
@@ -120,12 +123,11 @@ const Room = (props: AppProps): JSX.Element => {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {is_premium ? (
+              {is_premium && (
                 <div className="property__mark">
                   <span>Premium</span>
                 </div>
-              ) : null}
-
+              )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
                 <button
@@ -209,9 +211,9 @@ const Room = (props: AppProps): JSX.Element => {
             </div>
           </div>
           <section className="property__map map">
-            {nearbyHotels ? (
+            {nearbyHotels && (
               <Map hotels={nearbyHotels} city={hotel.city.location} />
-            ) : null}
+            )}
           </section>
         </section>
         <div className="container">
@@ -219,7 +221,7 @@ const Room = (props: AppProps): JSX.Element => {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            {nearbyHotels ? <NearbyHotelsList hotels={nearbyHotels} /> : null}
+            {nearbyHotels && <NearbyHotelsList hotels={nearbyHotels} />}
           </section>
         </div>
       </main>

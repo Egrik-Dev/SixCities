@@ -12,9 +12,8 @@ type OwnProps = {
   };
 };
 
-export const Map = (props: OwnProps): JSX.Element => {
-  const { hotels } = props;
-  const { latitude, longitude, zoom } = props.city;
+export const Map = ({ hotels, city }: OwnProps): JSX.Element => {
+  const { latitude, longitude, zoom } = city;
 
   React.useEffect(() => {
     const icon = leaflet.icon({

@@ -6,9 +6,7 @@ interface OwnProps {
   city: string;
 }
 
-export const FavoriteOfferList = (props: OwnProps): JSX.Element => {
-  const { hotels, city } = props;
-
+export const FavoriteOfferList = ({ hotels, city }: OwnProps): JSX.Element => {
   const filterOffersByCity = (hotels: Hotel[]): Hotel[] => {
     return hotels.filter((hotel: Hotel): boolean => hotel.city.name === city);
   };

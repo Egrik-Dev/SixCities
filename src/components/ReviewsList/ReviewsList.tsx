@@ -6,9 +6,8 @@ type OwnProps = {
   reviews: Reviews[];
 };
 
-export const ReviewsList = (props: OwnProps) => {
-  const quantityReviews = props.reviews.length;
-  const { reviews } = props;
+export const ReviewsList = ({ reviews }: OwnProps) => {
+  const quantityReviews = reviews.length;
 
   return (
     <>
