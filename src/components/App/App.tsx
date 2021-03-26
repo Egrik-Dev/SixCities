@@ -3,12 +3,13 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Main } from "../Main/Main";
 import { Login } from "../Login/Login";
 import { Favorites } from "../Favorites/Favorites";
-import Room from "../Room/Room";
+import { Room } from "../Room/Room";
 import { connect } from "react-redux";
-import { fetchHotels } from "../../actions/action-api";
-import { StoreState } from "../../reducers/root-reducer";
-import { Hotel } from "../../actions/action";
+import { actionCreators, StoreState } from "../../state";
+import { Hotel } from "../../types/index";
 import { AppRoute } from "../../const";
+
+const { fetchHotels } = actionCreators;
 
 type AppStateProps = {
   hotels: Hotel[];

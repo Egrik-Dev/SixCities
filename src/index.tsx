@@ -4,7 +4,7 @@ import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import { createApi } from "./api";
 import App from "./components/App/App";
-import rootReducer from "./reducers/root-reducer";
+import rootReducer from "./state/reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const root = document.querySelector(`#root`);

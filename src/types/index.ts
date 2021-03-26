@@ -1,4 +1,15 @@
-import { ActionTypes } from "./types";
+export interface Reviews {
+  comment: string;
+  date: Date;
+  id: number;
+  rating: number;
+  user: {
+    avatar_url: string;
+    id: number;
+    is_pro: boolean;
+    name: string;
+  };
+}
 
 export interface Hotel {
   id: number;
@@ -34,28 +45,3 @@ export interface Hotel {
   title: string;
   type: string;
 }
-
-export interface Reviews {
-  comment: string;
-  date: Date;
-  id: number;
-  rating: number;
-  user: {
-    avatar_url: string;
-    id: number;
-    is_pro: boolean;
-    name: string;
-  };
-}
-
-export type LoadHotelsAction = {
-  type: ActionTypes.loadHotels;
-  payload: Hotel[];
-};
-
-export const ActionCreator = {
-  loadHotels: (data: Hotel[]) => ({
-    type: ActionTypes.loadHotels,
-    payload: data,
-  }),
-};

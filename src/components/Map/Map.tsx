@@ -1,6 +1,6 @@
 import React from "react";
 import leaflet, { LatLngExpression, LatLngTuple } from "leaflet";
-import { Hotel } from "../../actions/action";
+import { Hotel } from "../../types";
 import "leaflet/dist/leaflet.css";
 
 type OwnProps = {

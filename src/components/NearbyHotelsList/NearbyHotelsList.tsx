@@ -1,6 +1,6 @@
 import React from "react";
 import OfferCard from "../OfferCard/OfferCard";
-import { Hotel } from "../../actions/action";
+import { Hotel } from "../../types";
 
 interface OfferListProps {
   hotels: Hotel[];

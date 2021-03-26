@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Hotel } from "../../actions/action";
+import { Hotel } from "../../types/index";
 import { FavoriteOfferList } from "../FavoriteOfferList/FavoriteOfferList";
 import { AppRoute } from "../../const";
 

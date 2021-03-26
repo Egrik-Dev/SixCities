@@ -1,16 +1,20 @@
 import { Dispatch } from "redux";
 import { AxiosInstance, AxiosResponse } from "axios";
-import { Action } from "./types";
-import { Hotel, ActionCreator, Reviews } from "./action";
-import { StoreState } from "../reducers/root-reducer";
+import { Action } from "../actions";
+import { ActionTypes } from "../action-types";
+import { StoreState } from "../reducers";
+import { Hotel } from "../../types";
 
 export const fetchHotels = () => (
   dispatch: Dispatch<Action>,
   _getState: () => StoreState,
   api: AxiosInstance
 ): Promise<void> =>
-  api.get<Hotel[]>(`/hotels`).then(({ data }) => {
-    dispatch(ActionCreator.loadHotels(data));
+  api.get(`/hotels`).then(({ data }: { data: Hotel[] }) => {
+    dispatch({
+      type: ActionTypes.LOAD_HOTELS,
+      payload: data,
+    });
   });
 
 export const fetchReviews = (id: string) => (
@@ -24,3 +28,8 @@ export const fetchNearbyHotels = (id: string) => (
   _getState: () => StoreState,
   api: AxiosInstance
 ): Promise<AxiosResponse> => api.get(`/hotels/${id}/nearby`);
+
+// export const changeCity = (data: string) => ({
+//   type: ActionTypes.CHANGE_CITY,
+//   payload: data,
+// });

@@ -1,12 +1,22 @@
 import { Link } from "react-router-dom";
-import { Hotel } from "../../actions/action";
+import { Hotel } from "../../types/index";
 import { OfferList } from "../OfferList/OfferList";
 import { Map } from "../Map/Map";
 import { AppRoute } from "../../const";
+// import { connect } from "react-redux";
+// import { StoreState } from "../../state/reducers/root-reducer";
 
 interface MainProps {
   hotels: Hotel[];
 }
+
+// type AppStateProps = {
+//   currentCity: string;
+// };
+
+// type AppDispatchProps = {
+//   changeCity: typeof ActionCreator.changeCity;
+// };
 
 export const Main = ({ hotels }: MainProps): JSX.Element => {
   // Временная фильтрация
@@ -142,3 +152,15 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
     </div>
   );
 };
+
+// const mapStateToProps = ({
+//   currentCity,
+// }: StoreState): { currentCity: string } => {
+//   return { currentCity };
+// };
+
+// export { Main };
+// export default connect<AppStateProps, AppDispatchProps, {}, StoreState>(
+//   mapStateToProps,
+//   { changeCity }
+// )(Main);

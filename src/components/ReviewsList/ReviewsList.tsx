@@ -1,5 +1,4 @@
-import React from "react";
-import { Reviews } from "../../actions/action";
+import { Reviews } from "../../types";
 import { Review } from "../Review/Review";
 
 type OwnProps = {

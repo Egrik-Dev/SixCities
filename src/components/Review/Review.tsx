@@ -1,4 +1,4 @@
-import { Reviews } from "../../actions/action";
+import { Reviews } from "../../types";
 import { calculateRating } from "../../utils";
 import { Months } from "../../const";
 

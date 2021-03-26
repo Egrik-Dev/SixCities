@@ -1,5 +1,5 @@
 import { calculateRating } from "../../utils";
-import { Hotel } from "../../actions/action";
+import { Hotel } from "../../types/index";
 
 interface OwnProps {
   hotel: Hotel;

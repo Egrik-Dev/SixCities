@@ -1,4 +1,4 @@
-import { Hotel } from "../../actions/action";
+import { Hotel } from "../../types/index";
 import { FavoriteCard } from "../FavoriteCard/FavoriteCard";
 
 interface OwnProps {
