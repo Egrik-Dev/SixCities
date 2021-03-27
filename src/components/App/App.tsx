@@ -4,25 +4,18 @@ import { Main } from "../Main/Main";
 import { Login } from "../Login/Login";
 import { Favorites } from "../Favorites/Favorites";
 import { Room } from "../Room/Room";
-import { connect } from "react-redux";
-import { actionCreators, StoreState } from "../../state";
-import { Hotel } from "../../types/index";
 import { AppRoute } from "../../const";
-
-const { fetchHotels } = actionCreators;
-
-type AppStateProps = {
-  hotels: Hotel[];
-};
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypesSelector";
 
 type AppDispatchProps = {
   fetchHotels: Function;
 };
 
-type AppProps = AppStateProps & AppDispatchProps;
-
-const App = ({ hotels, fetchHotels }: AppProps): JSX.Element => {
+const App = (): JSX.Element => {
   const [loadingFlag, setLoadingFlag] = React.useState(true);
+  const { fetchHotels }: AppDispatchProps = useActions();
+  const { hotels } = useTypedSelector((state) => state.hotels);
 
   React.useEffect((): void => {
     fetchHotels().then(() => setLoadingFlag(false));
@@ -56,12 +49,4 @@ const App = ({ hotels, fetchHotels }: AppProps): JSX.Element => {
   );
 };
 
-const mapStateToProps = ({ hotels }: StoreState): { hotels: Hotel[] } => {
-  return { hotels };
-};
-
 export { App };
-export default connect<AppStateProps, AppDispatchProps, {}, StoreState>(
-  mapStateToProps,
-  { fetchHotels }
-)(App);

@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import { createApi } from "./api";
-import App from "./components/App/App";
+import { App } from "./components/App/App";
 import rootReducer from "./state/reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 
