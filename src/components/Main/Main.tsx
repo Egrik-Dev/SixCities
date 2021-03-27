@@ -5,19 +5,19 @@ import { Map } from "../Map/Map";
 import { CityTabs } from "../CityTabs/CityTabs";
 import { AppRoute } from "../../const";
 import { useTypedSelector } from "../../hooks/useTypesSelector";
-// import { useActions } from "../../hooks/useActions";
-import { useEffect, useState } from "react";
+import { useActions } from "../../hooks/useActions";
+import { useCallback, useEffect, useState } from "react";
 
 interface MainProps {
   hotels: Hotel[];
 }
 
-// type AppDispatchProps = {
-//   changeCity: Function;
-// };
+type AppDispatchProps = {
+  changeCity: Function;
+};
 
 export const Main = ({ hotels }: MainProps): JSX.Element => {
-  // const { changeCity }: AppDispatchProps = useActions();
+  const { changeCity }: AppDispatchProps = useActions();
   const { city } = useTypedSelector((state) => state.currentCity);
 
   const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
@@ -31,6 +31,16 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
   useEffect(() => {
     setFilteredHotels(filterByCity(hotels));
   }, [city]);
+
+  const onTabCityClick = useCallback(
+    (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
+      const selectedCity = evt.currentTarget.text;
+      if (city !== selectedCity) {
+        changeCity(selectedCity);
+      }
+    },
+    [city]
+  );
 
   return (
     <div className="page page--gray page--main">
@@ -71,7 +81,11 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CityTabs hotels={hotels} currentCity={city} />
+            <CityTabs
+              hotels={hotels}
+              currentCity={city}
+              onTabCityClick={onTabCityClick}
+            />
           </section>
         </div>
         <div className="cities">
