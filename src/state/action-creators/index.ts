@@ -3,7 +3,7 @@ import { AxiosInstance, AxiosResponse } from "axios";
 import { Action } from "../actions";
 import { ActionTypes } from "../action-types";
 import { StoreState } from "../reducers";
-import { Hotel } from "../../types";
+import { Hotel, Reviews } from "../../types";
 
 export const fetchHotels = () => (
   dispatch: Dispatch<Action>,
@@ -21,7 +21,7 @@ export const fetchReviews = (id: string) => (
   _dispatch: Dispatch,
   _getState: () => StoreState,
   api: AxiosInstance
-): Promise<AxiosResponse> => api.get(`/comments/${id}`);
+): Promise<AxiosResponse<Reviews[]>> => api.get(`/comments/${id}`);
 
 export const fetchNearbyHotels = (id: string) => (
   _dispatch: Dispatch,

@@ -6,12 +6,8 @@ import { OfferImage } from "../OfferImage/OfferImage";
 import { NearbyHotelsList } from "../NearbyHotelsList/NearbyHotelsList";
 import { NewComment } from "../NewComment/NewComment";
 import { Map } from "../Map/Map";
-// import {
-//   fetchReviews,
-//   fetchNearbyHotels,
-// } from "../../state/actions/action-api";
+import { useActions } from "../../hooks/useActions";
 import { AppRoute } from "../../const";
-// import { connect } from "react-redux";
 import { ReviewsList } from "../ReviewsList/ReviewsList";
 
 type OwnProps = {
@@ -19,21 +15,14 @@ type OwnProps = {
   id: string;
 };
 
-// type AppDispatchProps = {
-//   fetchReviews: Function; // ToDo: Разобраться как затипизировать
-//   fetchNearbyHotels: Function;
-// };
-
-// type AppProps = OwnProps & AppDispatchProps;
+type AppDispatchProps = {
+  fetchReviews: Function; // ToDo: Разобраться как затипизировать
+  fetchNearbyHotels: Function;
+};
 
 const MAX_OFFER_IMAGES = 6;
 
-const Room = ({
-  hotels,
-  id,
-}: // fetchReviews,
-// fetchNearbyHotels,
-OwnProps): JSX.Element => {
+export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
   const raiseOnTheTop = () => {
     window.scrollTo(0, 0);
   };
@@ -41,21 +30,22 @@ OwnProps): JSX.Element => {
   const [hotel, setHotel] = React.useState<Hotel>();
   const [reviews, setReviews] = React.useState<Reviews[]>([]);
   const [nearbyHotels, setNearbyHotels] = React.useState<Hotel[]>();
+  const { fetchReviews, fetchNearbyHotels }: AppDispatchProps = useActions();
 
   React.useEffect(() => {
     raiseOnTheTop();
     setHotel(hotels.find((hotel: Hotel): boolean => hotel.id === Number(id)));
   }, [hotels, id]);
 
-  // React.useEffect(() => {
-  //   fetchReviews(id).then(({ data }: { data: Reviews[] }) => setReviews(data));
-  // }, [fetchReviews, id]);
+  React.useEffect(() => {
+    fetchReviews(id).then(({ data }: { data: Reviews[] }) => setReviews(data));
+  }, [id]);
 
-  // React.useEffect(() => {
-  //   fetchNearbyHotels(id).then(({ data }: { data: Hotel[] }) =>
-  //     setNearbyHotels(data)
-  //   );
-  // }, [fetchNearbyHotels, id]);
+  React.useEffect(() => {
+    fetchNearbyHotels(id).then(({ data }: { data: Hotel[] }) =>
+      setNearbyHotels(data)
+    );
+  }, [id]);
 
   if (!hotel) {
     return <div>Film not found</div>;
@@ -231,13 +221,3 @@ OwnProps): JSX.Element => {
     </div>
   );
 };
-
-const mapStateToProps = () => {
-  return {};
-};
-
-export { Room };
-// export default connect<{}, AppDispatchProps, {}, {}>(mapStateToProps, {
-//   fetchReviews,
-//   fetchNearbyHotels,
-// })(Room);
