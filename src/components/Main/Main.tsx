@@ -3,30 +3,33 @@ import { Hotel } from "../../types/index";
 import { OfferList } from "../OfferList/OfferList";
 import { Map } from "../Map/Map";
 import { AppRoute } from "../../const";
-// import { connect } from "react-redux";
-// import { StoreState } from "../../state/reducers/root-reducer";
+import { useTypedSelector } from "../../hooks/useTypesSelector";
+// import { useActions } from "../../hooks/useActions";
+import { useEffect, useState } from "react";
 
 interface MainProps {
   hotels: Hotel[];
 }
 
-// type AppStateProps = {
-//   currentCity: string;
-// };
-
 // type AppDispatchProps = {
-//   changeCity: typeof ActionCreator.changeCity;
+//   changeCity: Function;
 // };
 
 export const Main = ({ hotels }: MainProps): JSX.Element => {
-  // Временная фильтрация
-  const filterByAmsterdam = (allHotels: Hotel[]): Hotel[] => {
+  // const { changeCity }: AppDispatchProps = useActions();
+  const { city } = useTypedSelector((state) => state.currentCity);
+
+  const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
+
+  const filterByCity = (allHotels: Hotel[]): Hotel[] => {
     return allHotels.filter(
-      (hotel: Hotel): boolean => hotel.city.name === `Amsterdam`
+      (hotel: Hotel): boolean => hotel.city.name === city
     );
   };
 
-  const amsterdamHotels = filterByAmsterdam(hotels);
+  useEffect(() => {
+    setFilteredHotels(filterByCity(hotels));
+  }, [city]);
 
   return (
     <div className="page page--gray page--main">
@@ -106,7 +109,7 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {hotels.length} places to stay in Amsterdam
+                {filteredHotels.length} places to stay in {city}
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -134,15 +137,12 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
                   </li>
                 </ul>
               </form>
-              <OfferList hotels={hotels} />
+              <OfferList hotels={filteredHotels} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
                 {hotels && (
-                  <Map
-                    hotels={amsterdamHotels}
-                    city={hotels[0].city.location}
-                  />
+                  <Map hotels={filteredHotels} city={hotels[0].city.location} />
                 )}
               </section>
             </div>
@@ -152,15 +152,3 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
     </div>
   );
 };
-
-// const mapStateToProps = ({
-//   currentCity,
-// }: StoreState): { currentCity: string } => {
-//   return { currentCity };
-// };
-
-// export { Main };
-// export default connect<AppStateProps, AppDispatchProps, {}, StoreState>(
-//   mapStateToProps,
-//   { changeCity }
-// )(Main);

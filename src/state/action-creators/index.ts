@@ -28,7 +28,7 @@ export const fetchNearbyHotels = (id: string) => (
   api: AxiosInstance
 ): Promise<AxiosResponse> => api.get(`/hotels/${id}/nearby`);
 
-// export const changeCity = (data: string) => ({
-//   type: ActionTypes.CHANGE_CITY,
-//   payload: data,
-// });
+export const changeCity = (data: string) => ({
+  type: ActionTypes.CHANGE_CITY,
+  payload: data,
+});

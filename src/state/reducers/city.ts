@@ -1,15 +1,21 @@
 import { ActionTypes } from "../action-types";
 import { Action } from "../actions";
 
-const initialState = `Amsterdam`;
+interface cityState {
+  city: string;
+}
+
+const initialState = {
+  city: `Paris`,
+};
 
 export const cityReducer = (
-  state: string = initialState,
+  state: cityState = initialState,
   action: Action
-): string => {
+) => {
   switch (action.type) {
     case ActionTypes.CHANGE_CITY:
-      return (state = action.payload);
+      return { city: action.payload };
     default:
       return state;
   }
