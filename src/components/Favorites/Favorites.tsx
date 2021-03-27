@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Hotel } from "../../types/index";
 import { FavoriteOfferList } from "../FavoriteOfferList/FavoriteOfferList";
 import { AppRoute } from "../../const";
+import { getUniqueArrayCities } from "../../utils";
 
 type OwnStateProps = {
   hotels: Hotel[];
@@ -13,19 +14,11 @@ const QUANTITY_FAVORITE_OFFERS = 10;
 export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
   const [favoriteOffers, SetFavoriteOffers] = React.useState<[] | Hotel[]>([]);
 
-  const getFavoriteCities = (favoriteHotels: Hotel[]): string[] => {
-    const cities: Set<string> = new Set();
-    favoriteHotels.forEach(
-      (hotel: Hotel): Set<string> => cities.add(hotel.city.name)
-    );
-    return Array.from(cities);
-  };
-
   React.useEffect((): void => {
     SetFavoriteOffers(hotels.slice(0, QUANTITY_FAVORITE_OFFERS));
   }, [hotels]);
 
-  const favoriteCities = getFavoriteCities(favoriteOffers);
+  const favoriteCities = getUniqueArrayCities(favoriteOffers);
 
   return (
     <div className="page">

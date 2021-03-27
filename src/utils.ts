@@ -1,3 +1,5 @@
+import { Hotel } from "./types";
+
 export const calculateRating = (rating: number): number => {
   const roundedRating = Math.round(rating);
 
@@ -15,4 +17,12 @@ export const calculateRating = (rating: number): number => {
     default:
       return 0;
   }
+};
+
+export const getUniqueArrayCities = (favoriteHotels: Hotel[]): string[] => {
+  const cities: Set<string> = new Set();
+  favoriteHotels.forEach(
+    (hotel: Hotel): Set<string> => cities.add(hotel.city.name)
+  );
+  return Array.from(cities);
 };

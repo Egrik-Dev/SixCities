@@ -6,7 +6,7 @@ interface cityState {
 }
 
 const initialState = {
-  city: `Paris`,
+  city: `Amsterdam`,
 };
 
 export const cityReducer = (
