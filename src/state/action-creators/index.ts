@@ -32,3 +32,8 @@ export const changeCity = (data: string) => ({
   type: ActionTypes.CHANGE_CITY,
   payload: data,
 });
+
+export const changeSortType = (sortName: string) => ({
+  type: ActionTypes.CHANGE_SORT_TYPE,
+  payload: sortName,
+});

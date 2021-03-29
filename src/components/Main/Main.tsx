@@ -3,7 +3,8 @@ import { Hotel } from "../../types/index";
 import { OfferList } from "../OfferList/OfferList";
 import { Map } from "../Map/Map";
 import { CityTabs } from "../CityTabs/CityTabs";
-import { AppRoute } from "../../const";
+import { SortingOptions } from "../SortingOptions/SortingOptions";
+import { AppRoute, sortTypeList } from "../../const";
 import { useTypedSelector } from "../../hooks/useTypesSelector";
 import { useActions } from "../../hooks/useActions";
 import { useCallback, useEffect, useState } from "react";
@@ -19,7 +20,9 @@ type AppDispatchProps = {
 export const Main = ({ hotels }: MainProps): JSX.Element => {
   const { changeCity }: AppDispatchProps = useActions();
   const { city } = useTypedSelector((state) => state.currentCity);
+  const { sortType } = useTypedSelector((state) => state.hotels);
 
+  const [sortedHotels, setSortedHotels] = useState<Hotel[]>([]);
   const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
 
   const filterByCity = (allHotels: Hotel[]): Hotel[] => {
@@ -28,9 +31,40 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
     );
   };
 
+  const sortingHotels = (hotelsList: Hotel[], sortName: string): Hotel[] => {
+    switch (sortName) {
+      case sortTypeList.POPULAR:
+        return hotels.filter((hotel) =>
+          hotelsList.find((hotelInList) => hotel === hotelInList)
+        );
+      case sortTypeList.PRICE_HIGH_TO_LOW:
+        return hotelsList
+          .sort((a: Hotel, b: Hotel) => b.price - a.price)
+          .slice();
+      case sortTypeList.PRICE_LOW_TO_HIGH:
+        return hotelsList
+          .sort((a: Hotel, b: Hotel) => a.price - b.price)
+          .slice();
+      case sortTypeList.TOP_RATED_FIRST:
+        return hotelsList
+          .sort((a: Hotel, b: Hotel) => b.rating - a.rating)
+          .slice();
+      default:
+        return hotelsList;
+    }
+  };
+
   useEffect(() => {
-    setFilteredHotels(filterByCity(hotels));
-  }, [city]);
+    const filteredHotelList = filterByCity(hotels);
+    setFilteredHotels(filteredHotelList);
+    setSortedHotels(sortingHotels(filteredHotelList, sortType));
+  }, [city, hotels]);
+
+  useEffect(() => {
+    if (sortedHotels.length > 0) {
+      setSortedHotels(sortingHotels(filteredHotels, sortType));
+    }
+  }, [sortType]);
 
   const onTabCityClick = useCallback(
     (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
@@ -93,35 +127,10 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {filteredHotels.length} places to stay in {city}
+                {sortedHotels.length} places to stay in {city}
               </b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li
-                    className="places__option places__option--active"
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
-              <OfferList hotels={filteredHotels} />
+              <SortingOptions />
+              <OfferList hotels={sortedHotels} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

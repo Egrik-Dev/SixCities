@@ -6,17 +6,10 @@ interface OfferListProps {
   hotels: Hotel[];
 }
 
-const START_QUANTITY_OFFERS = 4;
-
 export const OfferList = ({ hotels }: OfferListProps) => {
   const classNameMainPage = `cities__place-card place-card`;
 
   const [activeOffer, setActiveOffer] = React.useState<null | Hotel>();
-  const [startOffers, SetStartOffers] = React.useState<[] | Hotel[]>([]);
-
-  React.useEffect((): void => {
-    SetStartOffers(hotels.slice(0, START_QUANTITY_OFFERS));
-  }, [hotels]);
 
   const onHoverHandler = React.useCallback((hotel: Hotel): void => {
     setActiveOffer(hotel);
@@ -24,7 +17,7 @@ export const OfferList = ({ hotels }: OfferListProps) => {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {startOffers.map(
+      {hotels.map(
         (hotel: Hotel, i: number): JSX.Element => (
           <OfferCard
             key={i}

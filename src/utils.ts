@@ -26,3 +26,7 @@ export const getUniqueArrayCities = (favoriteHotels: Hotel[]): string[] => {
   );
   return Array.from(cities);
 };
+
+export const extend = (a: {}, b: {}): {} => {
+  return Object.assign({}, a, b);
+};

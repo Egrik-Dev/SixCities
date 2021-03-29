@@ -11,4 +11,9 @@ type ChangeCity = {
   payload: string;
 };
 
-export type Action = ChangeCity | LoadHotelsAction;
+type ChangeSortType = {
+  type: ActionTypes.CHANGE_SORT_TYPE;
+  payload: string;
+};
+
+export type Action = ChangeCity | LoadHotelsAction | ChangeSortType;
