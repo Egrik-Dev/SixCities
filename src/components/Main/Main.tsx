@@ -130,7 +130,11 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
                 {sortedHotels.length} places to stay in {city}
               </b>
               <SortingOptions />
-              <OfferList hotels={sortedHotels} />
+              <OfferList
+                hotels={sortedHotels}
+                classNameMainPage={`cities__place-card place-card`}
+                classNameOfferPlace={`cities__places-list places__list tabs__content`}
+              />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

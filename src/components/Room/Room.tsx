@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { Hotel, Reviews } from "../../types";
 import { calculateRating } from "../../utils";
 import { OfferImage } from "../OfferImage/OfferImage";
-import { NearbyHotelsList } from "../NearbyHotelsList/NearbyHotelsList";
 import { NewComment } from "../NewComment/NewComment";
 import { Map } from "../Map/Map";
 import { useActions } from "../../hooks/useActions";
 import { AppRoute } from "../../const";
 import { ReviewsList } from "../ReviewsList/ReviewsList";
+import { OfferList } from "../OfferList/OfferList";
 
 type OwnProps = {
   hotels: Hotel[];
@@ -214,7 +214,13 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            {nearbyHotels && <NearbyHotelsList hotels={nearbyHotels} />}
+            {nearbyHotels && (
+              <OfferList
+                hotels={nearbyHotels}
+                classNameMainPage={`near-places__card place-card`}
+                classNameOfferPlace={`near-places__list places__list`}
+              />
+            )}
           </section>
         </div>
       </main>

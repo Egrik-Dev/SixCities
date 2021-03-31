@@ -5,10 +5,15 @@ import { useActions } from "../../hooks/useActions";
 
 interface OfferListProps {
   hotels: Hotel[];
+  classNameMainPage: string;
+  classNameOfferPlace: string;
 }
 
-export const OfferList = ({ hotels }: OfferListProps) => {
-  const classNameMainPage = `cities__place-card place-card`;
+export const OfferList = ({
+  hotels,
+  classNameMainPage,
+  classNameOfferPlace,
+}: OfferListProps) => {
   const { changeActiveOffer } = useActions();
 
   const onHoverHandler = React.useCallback((hotel: Hotel): void => {
@@ -16,7 +21,7 @@ export const OfferList = ({ hotels }: OfferListProps) => {
   }, []);
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={classNameOfferPlace}>
       {hotels.map(
         (hotel: Hotel, i: number): JSX.Element => (
           <OfferCard
