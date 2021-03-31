@@ -37,3 +37,8 @@ export const changeSortType = (sortName: string) => ({
   type: ActionTypes.CHANGE_SORT_TYPE,
   payload: sortName,
 });
+
+export const changeActiveOffer = (hotel: Hotel) => ({
+  type: ActionTypes.CHANGE_ACTIVE_OFFER,
+  payload: hotel,
+});

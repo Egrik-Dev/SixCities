@@ -1,6 +1,7 @@
 import React from "react";
 import OfferCard from "../OfferCard/OfferCard";
 import { Hotel } from "../../types";
+import { useActions } from "../../hooks/useActions";
 
 interface OfferListProps {
   hotels: Hotel[];
@@ -8,11 +9,10 @@ interface OfferListProps {
 
 export const OfferList = ({ hotels }: OfferListProps) => {
   const classNameMainPage = `cities__place-card place-card`;
-
-  const [activeOffer, setActiveOffer] = React.useState<null | Hotel>();
+  const { changeActiveOffer } = useActions();
 
   const onHoverHandler = React.useCallback((hotel: Hotel): void => {
-    setActiveOffer(hotel);
+    changeActiveOffer(hotel);
   }, []);
 
   return (

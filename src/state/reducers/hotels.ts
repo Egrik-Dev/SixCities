@@ -8,11 +8,13 @@ const defaultSortType = `Popular`;
 interface HotelsState {
   hotels: Hotel[];
   sortType: string;
+  activeOffer: Hotel | {};
 }
 
 const initialState = {
   hotels: [],
   sortType: defaultSortType,
+  activeOffer: {},
 };
 
 export const hotelsReducer = (
@@ -24,6 +26,8 @@ export const hotelsReducer = (
       return extend(state, { hotels: action.payload });
     case ActionTypes.CHANGE_SORT_TYPE:
       return extend(state, { sortType: action.payload });
+    case ActionTypes.CHANGE_ACTIVE_OFFER:
+      return extend(state, { activeOffer: action.payload });
     default:
       return state;
   }

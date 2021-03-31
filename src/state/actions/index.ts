@@ -16,4 +16,13 @@ type ChangeSortType = {
   payload: string;
 };
 
-export type Action = ChangeCity | LoadHotelsAction | ChangeSortType;
+type ChangeActiveOffer = {
+  type: ActionTypes.CHANGE_ACTIVE_OFFER;
+  payload: Hotel;
+};
+
+export type Action =
+  | ChangeCity
+  | LoadHotelsAction
+  | ChangeSortType
+  | ChangeActiveOffer;

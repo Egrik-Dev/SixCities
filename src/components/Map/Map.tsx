@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import leaflet, { LatLngExpression, LatLngTuple } from "leaflet";
 import { Hotel } from "../../types";
 import "leaflet/dist/leaflet.css";
+import { useTypedSelector } from "../../hooks/useTypesSelector";
 
 type OwnProps = {
   hotels: Hotel[];
@@ -14,20 +15,61 @@ type OwnProps = {
 
 export const Map = ({ hotels, city }: OwnProps): JSX.Element => {
   const { latitude, longitude, zoom } = city;
+  const { activeOffer } = useTypedSelector((state) => state.hotels);
+  const [mapState, setMap] = useState<leaflet.Map>();
+  const [pinsGroup, setPinsGroup] = useState<leaflet.LayerGroup>();
 
-  React.useEffect(() => {
-    const icon = leaflet.icon({
-      iconUrl: `img/pin.svg`,
-      iconSize: [27, 39],
+  const pin = leaflet.icon({
+    iconUrl: `img/pin.svg`,
+    iconSize: [27, 39],
+  });
+
+  const activePin = leaflet.icon({
+    iconUrl: `img/pin-active.svg`,
+    iconSize: [27, 39],
+  });
+
+  const renderMarkers = (map: leaflet.Map) => {
+    const markers: leaflet.Marker[] = [];
+
+    hotels.forEach((hotel: Hotel): void => {
+      const offerCords: LatLngTuple = [
+        hotel.location.latitude,
+        hotel.location.longitude,
+      ];
+
+      const marker = leaflet
+        .marker(
+          offerCords,
+          hotel === activeOffer ? { icon: activePin } : { icon: pin }
+        )
+        .bindPopup(
+          `
+          <div style="text-align: center">
+            ${hotel.title}<br>
+            ${hotel.type}
+          </div>
+          `
+        );
+
+      markers.push(marker);
     });
 
+    const markersGroup = leaflet.layerGroup(markers);
+    setPinsGroup(markersGroup);
+    markersGroup.addTo(map);
+  };
+
+  const initialMap = () => {
     const city: LatLngExpression = [latitude, longitude];
 
-    let map = leaflet.map(`map`, {
+    const map = leaflet.map(`map`, {
       center: city,
-      zoom,
+      zoom: zoom,
       zoomControl: false,
     });
+
+    setMap(map);
 
     map.setView(city, zoom);
 
@@ -40,30 +82,20 @@ export const Map = ({ hotels, city }: OwnProps): JSX.Element => {
       )
       .addTo(map);
 
-    hotels.forEach((hotel: Hotel): void => {
-      const offerCords: LatLngTuple = [
-        hotel.location.latitude,
-        hotel.location.longitude,
-      ];
+    renderMarkers(map);
+  };
 
-      leaflet
-        .marker(offerCords, { icon })
-        .addTo(map)
-        .bindPopup(
-          `
-        <div style="text-align: center">
-          ${hotel.title}<br>
-          ${hotel.type}
-        </div>
-        `
-        )
-        .openPopup();
-    });
+  React.useEffect(() => {
+    initialMap();
+  }, []);
 
-    return () => {
-      map.remove();
-    };
-  }, [hotels]);
+  React.useEffect(() => {
+    if (mapState) {
+      pinsGroup?.clearLayers();
+      mapState.setView([latitude, longitude], zoom);
+      renderMarkers(mapState);
+    }
+  }, [activeOffer, hotels]);
 
   return <div id="map" style={{ height: `100%` }} />;
 };

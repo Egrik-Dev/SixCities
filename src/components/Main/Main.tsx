@@ -134,8 +134,11 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                {hotels && (
-                  <Map hotels={filteredHotels} city={hotels[0].city.location} />
+                {filteredHotels.length > 0 && (
+                  <Map
+                    hotels={filteredHotels}
+                    city={filteredHotels[0].city.location}
+                  />
                 )}
               </section>
             </div>
