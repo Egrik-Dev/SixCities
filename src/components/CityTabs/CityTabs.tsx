@@ -18,27 +18,29 @@ export const CityTabs: React.FC<CityTabsProps> = ({
 }) => {
   const [allCities, setAllCities] = useState<string[]>([]);
 
-  useEffect(() => {
+  useEffect((): void => {
     setAllCities(getUniqueArrayCities(hotels));
   }, []);
 
   return (
     <ul className="locations__list tabs__list">
-      {allCities.map((city, i) => (
-        <li key={i} className="locations__item">
-          <a
-            className={
-              city === currentCity
-                ? `locations__item-link tabs__item tabs__item--active`
-                : `locations__item-link tabs__item`
-            }
-            onClick={onTabCityClick}
-            href="#"
-          >
-            <span>{city}</span>
-          </a>
-        </li>
-      ))}
+      {allCities.map(
+        (city: string, i: number): JSX.Element => (
+          <li key={i} className="locations__item">
+            <a
+              className={
+                city === currentCity
+                  ? `locations__item-link tabs__item tabs__item--active`
+                  : `locations__item-link tabs__item`
+              }
+              onClick={onTabCityClick}
+              href="#"
+            >
+              <span>{city}</span>
+            </a>
+          </li>
+        )
+      )}
     </ul>
   );
 };

@@ -29,7 +29,7 @@ export const Map = ({ hotels, city }: OwnProps): JSX.Element => {
     iconSize: [27, 39],
   });
 
-  const renderMarkers = (map: leaflet.Map) => {
+  const renderMarkers = (map: leaflet.Map): void => {
     const markers: leaflet.Marker[] = [];
 
     hotels.forEach((hotel: Hotel): void => {
@@ -60,7 +60,7 @@ export const Map = ({ hotels, city }: OwnProps): JSX.Element => {
     markersGroup.addTo(map);
   };
 
-  const initialMap = () => {
+  const initialMap = (): void => {
     const city: LatLngExpression = [latitude, longitude];
 
     const map = leaflet.map(`map`, {
@@ -85,11 +85,11 @@ export const Map = ({ hotels, city }: OwnProps): JSX.Element => {
     renderMarkers(map);
   };
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     initialMap();
   }, []);
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     if (mapState) {
       pinsGroup?.clearLayers();
       mapState.setView([latitude, longitude], zoom);

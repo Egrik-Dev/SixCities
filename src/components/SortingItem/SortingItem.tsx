@@ -8,7 +8,7 @@ export const SortingItem = ({
   isActive,
   itemName,
   onTypeSortClick,
-}: SortingItemProps) => {
+}: SortingItemProps): JSX.Element => {
   return (
     <li
       onClick={onTypeSortClick}

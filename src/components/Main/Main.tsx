@@ -54,13 +54,13 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
     }
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     const filteredHotelList = filterByCity(hotels);
     setFilteredHotels(filteredHotelList);
     setSortedHotels(sortingHotels(filteredHotelList, sortType));
   }, [city, hotels]);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (sortedHotels.length > 0) {
       setSortedHotels(sortingHotels(filteredHotels, sortType));
     }

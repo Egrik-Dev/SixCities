@@ -6,7 +6,7 @@ import { AppRoute } from "../../const";
 
 interface AppProps {
   hotel: Hotel;
-  onHoverHandler?: (hotel: Hotel) => void;
+  onHoverHandler?: (hotel: Hotel) => void; // Исправить
   className: string;
 }
 
@@ -20,7 +20,7 @@ const OfferCard = ({
   return (
     <article
       className={className}
-      onMouseEnter={() => onHoverHandler && onHoverHandler(hotel)}
+      onMouseEnter={() => onHoverHandler && onHoverHandler(hotel)} // Исправить
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.OFFER}/${hotel.id}`}>

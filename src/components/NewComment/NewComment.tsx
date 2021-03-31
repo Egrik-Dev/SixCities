@@ -8,13 +8,13 @@ const ratingTitles = new Map([
   [5, `perfect`],
 ]);
 
-export const NewComment = () => {
+export const NewComment = (): JSX.Element => {
   const [rating, setRating] = React.useState<number>();
   const [comment, setComment] = React.useState<string>();
 
   const MAX_RATING = 5;
   const MIN_CHARACTERS = 50;
-  const ratingArr = new Array(MAX_RATING).fill(``);
+  const ratingArr: string[] = new Array(MAX_RATING).fill(``);
 
   const onChangeRating = React.useCallback(
     (evt: React.FormEvent<HTMLInputElement>): void => {
@@ -54,27 +54,29 @@ export const NewComment = () => {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {ratingArr.map((item: JSX.Element, i: number, array: number[]) => (
-          <React.Fragment key={i}>
-            <input
-              className="form__rating-input visually-hidden"
-              name="rating"
-              value={array.length - i}
-              id={`${array.length - i}-stars`}
-              type="radio"
-              onChange={onChangeRating}
-            />
-            <label
-              htmlFor={`${array.length - i}-stars`}
-              className="reviews__rating-label form__rating-label"
-              title={ratingTitles.get(array.length - i)}
-            >
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-            </label>
-          </React.Fragment>
-        ))}
+        {ratingArr.map(
+          (_item: string, i: number, array: string[]): JSX.Element => (
+            <React.Fragment key={i}>
+              <input
+                className="form__rating-input visually-hidden"
+                name="rating"
+                value={array.length - i}
+                id={`${array.length - i}-stars`}
+                type="radio"
+                onChange={onChangeRating}
+              />
+              <label
+                htmlFor={`${array.length - i}-stars`}
+                className="reviews__rating-label form__rating-label"
+                title={ratingTitles.get(array.length - i)}
+              >
+                <svg className="form__star-image" width="37" height="33">
+                  <use xlinkHref="#icon-star"></use>
+                </svg>
+              </label>
+            </React.Fragment>
+          )
+        )}
       </div>
       <textarea
         className="reviews__textarea form__textarea"

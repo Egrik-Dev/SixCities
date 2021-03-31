@@ -23,7 +23,7 @@ type AppDispatchProps = {
 const MAX_OFFER_IMAGES = 6;
 
 export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
-  const raiseOnTheTop = () => {
+  const raiseOnTheTop = (): void => {
     window.scrollTo(0, 0);
   };
 
@@ -32,16 +32,16 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
   const [nearbyHotels, setNearbyHotels] = React.useState<Hotel[]>();
   const { fetchReviews, fetchNearbyHotels }: AppDispatchProps = useActions();
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     raiseOnTheTop();
     setHotel(hotels.find((hotel: Hotel): boolean => hotel.id === Number(id)));
   }, [hotels, id]);
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     fetchReviews(id).then(({ data }: { data: Reviews[] }) => setReviews(data));
   }, [id]);
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     fetchNearbyHotels(id).then(({ data }: { data: Hotel[] }) =>
       setNearbyHotels(data)
     );

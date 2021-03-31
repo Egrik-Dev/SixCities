@@ -31,14 +31,16 @@ export const SortingOptions: React.FC = () => {
         </svg>
       </span>
       <ul className="places__options places__options--custom">
-        {arrSortTypeList.map((sortOption: string, i: number) => (
-          <SortingItem
-            key={i}
-            isActive={sortType === sortOption}
-            itemName={sortOption}
-            onTypeSortClick={changeType}
-          />
-        ))}
+        {arrSortTypeList.map(
+          (sortOption: string, i: number): JSX.Element => (
+            <SortingItem
+              key={i}
+              isActive={sortType === sortOption}
+              itemName={sortOption}
+              onTypeSortClick={changeType}
+            />
+          )
+        )}
       </ul>
     </form>
   );

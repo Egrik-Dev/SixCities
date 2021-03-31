@@ -5,7 +5,7 @@ interface OwnProps {
   hotel: Hotel;
 }
 
-export const FavoriteCard = (props: OwnProps) => {
+export const FavoriteCard = (props: OwnProps): JSX.Element => {
   const {
     title,
     price,
