@@ -4,6 +4,7 @@ import { OfferList } from "../OfferList/OfferList";
 import { Map } from "../Map/Map";
 import { CityTabs } from "../CityTabs/CityTabs";
 import { SortingOptions } from "../SortingOptions/SortingOptions";
+import { MainEmpty } from "../MainEmpty/MainEmpty";
 import { AppRoute, sortTypeList } from "../../const";
 import { useTypedSelector } from "../../hooks/useTypesSelector";
 import { useActions } from "../../hooks/useActions";
@@ -111,44 +112,44 @@ export const Main = ({ hotels }: MainProps): JSX.Element => {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <CityTabs
-              hotels={hotels}
-              currentCity={city}
-              onTabCityClick={onTabCityClick}
-            />
-          </section>
-        </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">
-                {sortedHotels.length} places to stay in {city}
-              </b>
-              <SortingOptions />
-              <OfferList
-                hotels={sortedHotels}
-                classNameMainPage={`cities__place-card place-card`}
-                classNameOfferPlace={`cities__places-list places__list tabs__content`}
-              />
+      {filteredHotels.length === 0 ? (
+        <MainEmpty city={city} onTabCityClick={onTabCityClick} />
+      ) : (
+        <main className="page__main page__main--index">
+          <h1 className="visually-hidden">Cities</h1>
+          <div className="tabs">
+            <section className="locations container">
+              <CityTabs currentCity={city} onTabCityClick={onTabCityClick} />
             </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                {filteredHotels.length > 0 && (
-                  <Map
-                    hotels={filteredHotels}
-                    city={filteredHotels[0].city.location}
-                  />
-                )}
+          </div>
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">
+                  {sortedHotels.length} places to stay in {city}
+                </b>
+                <SortingOptions />
+                <OfferList
+                  hotels={sortedHotels}
+                  classNameMainPage={`cities__place-card place-card`}
+                  classNameOfferPlace={`cities__places-list places__list tabs__content`}
+                />
               </section>
+              <div className="cities__right-section">
+                <section className="cities__map map">
+                  {filteredHotels.length > 0 && (
+                    <Map
+                      hotels={filteredHotels}
+                      city={filteredHotels[0].city.location}
+                    />
+                  )}
+                </section>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      )}
     </div>
   );
 };
