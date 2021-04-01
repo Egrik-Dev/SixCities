@@ -1,5 +1,7 @@
 import { calculateRating } from "../../utils";
 import { Hotel } from "../../types/index";
+import { Link } from "react-router-dom";
+import { AppRoute } from "../../const";
 
 interface OwnProps {
   hotel: Hotel;
@@ -13,12 +15,13 @@ export const FavoriteCard = (props: OwnProps): JSX.Element => {
     rating,
     type,
     preview_image,
+    id,
   } = props.hotel;
 
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${AppRoute.OFFER}/${id}`}>
           <img
             className="place-card__image"
             src={preview_image}
@@ -26,7 +29,7 @@ export const FavoriteCard = (props: OwnProps): JSX.Element => {
             height="110"
             alt={title}
           />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -55,7 +58,7 @@ export const FavoriteCard = (props: OwnProps): JSX.Element => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`${AppRoute.OFFER}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

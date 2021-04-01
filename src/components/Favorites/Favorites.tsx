@@ -4,6 +4,13 @@ import { Hotel } from "../../types/index";
 import { FavoriteOfferList } from "../FavoriteOfferList/FavoriteOfferList";
 import { AppRoute } from "../../const";
 import { getUniqueArrayCities } from "../../utils";
+import { FavoritesEmpty } from "../FavoritesEmpty/FavoritesEmpty";
+
+// ToDo
+// Сделать компоненту заглушку если предложений нет [x]
+// Сделать фетчинг favorites предложений с api
+// Сделать переход на конкретные предложения по клику [x]
+// При клике на город - Сделать переход на главную страницу с выбранным городом
 
 type OwnStateProps = {
   hotels: Hotel[];
@@ -55,38 +62,42 @@ export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
         </div>
       </header>
 
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {favoriteCities.map(
-                (city: string, i: number): JSX.Element => (
-                  <li key={i} className="favorites__locations-items">
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <Link
-                          className="locations__item-link"
-                          to={AppRoute.ROOT}
-                        >
-                          <span>{city}</span>
-                        </Link>
+      {favoriteCities.length === 0 ? (
+        <FavoritesEmpty />
+      ) : (
+        <main className="page__main page__main--favorites">
+          <div className="page__favorites-container container">
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {favoriteCities.map(
+                  (city: string, i: number): JSX.Element => (
+                    <li key={i} className="favorites__locations-items">
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <Link
+                            className="locations__item-link"
+                            to={AppRoute.ROOT}
+                          >
+                            <span>{city}</span>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                    <div className="favorites__places">
-                      <FavoriteOfferList
-                        key={i}
-                        hotels={favoriteOffers}
-                        city={city}
-                      />
-                    </div>
-                  </li>
-                )
-              )}
-            </ul>
-          </section>
-        </div>
-      </main>
+                      <div className="favorites__places">
+                        <FavoriteOfferList
+                          key={i}
+                          hotels={favoriteOffers}
+                          city={city}
+                        />
+                      </div>
+                    </li>
+                  )
+                )}
+              </ul>
+            </section>
+          </div>
+        </main>
+      )}
       <footer className="footer container">
         <Link className="footer__logo-link" to={AppRoute.ROOT}>
           <img

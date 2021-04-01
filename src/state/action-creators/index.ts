@@ -28,6 +28,12 @@ export const fetchNearbyHotels = (id: string) => (
   api: AxiosInstance
 ): Promise<AxiosResponse> => api.get(`/hotels/${id}/nearby`);
 
+export const fetchFavoriteHotels = () => (
+  _dispatch: Dispatch,
+  _getState: () => {},
+  api: AxiosInstance
+): Promise<AxiosResponse> => api.get(`/favorite`);
+
 export const changeCity = (data: string) => ({
   type: ActionTypes.CHANGE_CITY,
   payload: data,
