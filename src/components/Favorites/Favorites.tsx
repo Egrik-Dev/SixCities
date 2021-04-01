@@ -5,12 +5,13 @@ import { FavoriteOfferList } from "../FavoriteOfferList/FavoriteOfferList";
 import { AppRoute } from "../../const";
 import { getUniqueArrayCities } from "../../utils";
 import { FavoritesEmpty } from "../FavoritesEmpty/FavoritesEmpty";
+import { useActions } from "../../hooks/useActions";
 
 // ToDo
 // Сделать компоненту заглушку если предложений нет [x]
 // Сделать фетчинг favorites предложений с api
 // Сделать переход на конкретные предложения по клику [x]
-// При клике на город - Сделать переход на главную страницу с выбранным городом
+// При клике на город - Сделать переход на главную страницу с выбранным городом [x]
 
 type OwnStateProps = {
   hotels: Hotel[];
@@ -19,11 +20,20 @@ type OwnStateProps = {
 const QUANTITY_FAVORITE_OFFERS = 10;
 
 export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
+  const { changeCity } = useActions();
   const [favoriteOffers, SetFavoriteOffers] = React.useState<[] | Hotel[]>([]);
 
   React.useEffect((): void => {
     SetFavoriteOffers(hotels.slice(0, QUANTITY_FAVORITE_OFFERS));
   }, [hotels]);
+
+  const onCityClick = React.useCallback(
+    (evt: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+      const selectedCity = evt.currentTarget.textContent;
+      if (selectedCity) changeCity(selectedCity);
+    },
+    []
+  );
 
   const favoriteCities = getUniqueArrayCities(favoriteOffers);
 
@@ -74,7 +84,7 @@ export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
                   (city: string, i: number): JSX.Element => (
                     <li key={i} className="favorites__locations-items">
                       <div className="favorites__locations locations locations--current">
-                        <div className="locations__item">
+                        <div className="locations__item" onClick={onCityClick}>
                           <Link
                             className="locations__item-link"
                             to={AppRoute.ROOT}
