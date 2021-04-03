@@ -9,12 +9,20 @@ export const fetchHotels = () => (
   _getState: () => {},
   api: AxiosInstance
 ): Promise<void> =>
-  api.get(`/hotels`).then(({ data }: { data: Hotel[] }) => {
-    dispatch({
-      type: ActionTypes.LOAD_HOTELS,
-      payload: data,
+  api
+    .get(`/hotels`)
+    .then(({ data }: { data: Hotel[] }) => {
+      dispatch({
+        type: ActionTypes.LOAD_HOTELS,
+        payload: data,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ActionTypes.LOAD_HOTELS,
+        payload: [],
+      });
     });
-  });
 
 export const fetchReviews = (id: string) => (
   _dispatch: Dispatch,

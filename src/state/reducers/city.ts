@@ -12,7 +12,7 @@ const initialState = {
 export const cityReducer = (
   state: cityState = initialState,
   action: Action
-) => {
+): cityState => {
   switch (action.type) {
     case ActionTypes.CHANGE_CITY:
       return { city: action.payload };

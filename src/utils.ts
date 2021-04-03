@@ -1,3 +1,4 @@
+import { sortTypeList } from "./const";
 import { Hotel } from "./types";
 
 export const calculateRating = (rating: number): number => {
@@ -27,6 +28,31 @@ export const getUniqueArrayCities = (favoriteHotels: Hotel[]): string[] => {
   return Array.from(cities);
 };
 
-export const extend = (a: {}, b: {}): {} => {
-  return Object.assign({}, a, b);
+export const sortingHotels = (
+  hotels: Hotel[],
+  sortName: string,
+  city: string
+) => {
+  const filteredHotels = hotels.filter(
+    (hotel: Hotel): boolean => hotel.city.name === city
+  );
+
+  switch (sortName) {
+    case sortTypeList.POPULAR:
+      return filteredHotels;
+    case sortTypeList.PRICE_HIGH_TO_LOW:
+      return filteredHotels
+        .sort((a: Hotel, b: Hotel) => b.price - a.price)
+        .slice();
+    case sortTypeList.PRICE_LOW_TO_HIGH:
+      return filteredHotels
+        .sort((a: Hotel, b: Hotel) => a.price - b.price)
+        .slice();
+    case sortTypeList.TOP_RATED_FIRST:
+      return filteredHotels
+        .sort((a: Hotel, b: Hotel) => b.rating - a.rating)
+        .slice();
+    default:
+      return filteredHotels;
+  }
 };

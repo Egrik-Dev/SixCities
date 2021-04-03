@@ -1,7 +1,6 @@
 import { ActionTypes } from "../action-types";
 import { Action } from "../actions";
 import { Hotel } from "../../types";
-import { extend } from "../../utils";
 
 const defaultSortType = `Popular`;
 
@@ -20,14 +19,14 @@ const initialState = {
 export const hotelsReducer = (
   state: HotelsState = initialState,
   action: Action
-) => {
+): HotelsState => {
   switch (action.type) {
     case ActionTypes.LOAD_HOTELS:
-      return extend(state, { hotels: action.payload });
+      return Object.assign({}, state, { hotels: action.payload });
     case ActionTypes.CHANGE_SORT_TYPE:
-      return extend(state, { sortType: action.payload });
+      return Object.assign({}, state, { sortType: action.payload });
     case ActionTypes.CHANGE_ACTIVE_OFFER:
-      return extend(state, { activeOffer: action.payload });
+      return Object.assign({}, state, { activeOffer: action.payload });
     default:
       return state;
   }

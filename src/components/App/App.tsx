@@ -29,7 +29,7 @@ const App = (): JSX.Element => {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <Main hotels={hotels} />
+          <Main />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <Login />
