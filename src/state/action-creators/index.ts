@@ -3,6 +3,7 @@ import { AxiosInstance, AxiosResponse } from "axios";
 import { Action } from "../actions";
 import { ActionTypes } from "../action-types";
 import { Hotel, Reviews } from "../../types";
+import { RootState } from "../reducers";
 
 export const fetchHotels = () => (
   dispatch: Dispatch<Action>,
@@ -42,6 +43,29 @@ export const fetchFavoriteHotels = () => (
   api: AxiosInstance
 ): Promise<AxiosResponse> => api.get(`/favorite`);
 
+export const checkAuthAction = () => (
+  dispatch: Dispatch,
+  _getState: RootState,
+  api: AxiosInstance
+): void => {
+  api.get(`/login`).then(() => {
+    dispatch(changeAuthStatus(`AUTH`));
+  });
+};
+
+export const authAction = (email: string, password: string) => (
+  dispatch: Dispatch,
+  _getState: RootState,
+  api: AxiosInstance
+): Promise<void> =>
+  api.post(`/login`, { email, password }).then(() => {
+    dispatch(changeAuthStatus(`AUTH`));
+    dispatch(setUserName(email));
+  });
+// .then(() => {
+//   dispatch(setUserName(email));
+// });
+
 export const changeCity = (data: string) => ({
   type: ActionTypes.CHANGE_CITY,
   payload: data,
@@ -55,4 +79,14 @@ export const changeSortType = (sortName: string) => ({
 export const changeActiveOffer = (hotel: Hotel) => ({
   type: ActionTypes.CHANGE_ACTIVE_OFFER,
   payload: hotel,
+});
+
+export const changeAuthStatus = (status: string) => ({
+  type: ActionTypes.CHANGE_AUTH_STATUS,
+  payload: status,
+});
+
+export const setUserName = (userName: string) => ({
+  type: ActionTypes.SET_USER_NAME,
+  payload: userName,
 });

@@ -10,15 +10,19 @@ import { useTypedSelector } from "../../hooks/useTypesSelector";
 
 type AppDispatchProps = {
   fetchHotels: Function;
+  checkAuthAction: Function;
 };
 
 const App = (): JSX.Element => {
   const [loadingFlag, setLoadingFlag] = React.useState(true);
   const { fetchHotels }: AppDispatchProps = useActions();
+  const { checkAuthAction }: AppDispatchProps = useActions();
   const { hotels } = useTypedSelector((state) => state.hotels);
 
   React.useEffect((): void => {
-    fetchHotels().then(() => setLoadingFlag(false));
+    Promise.all([fetchHotels(), checkAuthAction()]).then(() =>
+      setLoadingFlag(false)
+    );
   }, []);
 
   if (loadingFlag) {

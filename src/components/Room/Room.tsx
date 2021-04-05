@@ -9,6 +9,7 @@ import { useActions } from "../../hooks/useActions";
 import { AppRoute } from "../../const";
 import { ReviewsList } from "../ReviewsList/ReviewsList";
 import { OfferList } from "../OfferList/OfferList";
+import { useTypedSelector } from "../../hooks/useTypesSelector";
 
 type OwnProps = {
   hotels: Hotel[];
@@ -31,6 +32,7 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
   const [reviews, setReviews] = React.useState<Reviews[]>([]);
   const [nearbyHotels, setNearbyHotels] = React.useState<Hotel[]>();
   const { fetchReviews, fetchNearbyHotels }: AppDispatchProps = useActions();
+  const { userName } = useTypedSelector((state) => state.user);
 
   React.useEffect((): void => {
     raiseOnTheTop();
@@ -93,7 +95,7 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
+                      {userName}
                     </span>
                   </Link>
                 </li>

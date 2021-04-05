@@ -21,8 +21,20 @@ type ChangeActiveOffer = {
   payload: Hotel;
 };
 
+type ChangeAuthStaus = {
+  type: ActionTypes.CHANGE_AUTH_STATUS;
+  payload: string;
+};
+
+type SetUserName = {
+  type: ActionTypes.SET_USER_NAME;
+  payload: string;
+};
+
 export type Action =
   | ChangeCity
   | LoadHotelsAction
   | ChangeSortType
-  | ChangeActiveOffer;
+  | ChangeActiveOffer
+  | ChangeAuthStaus
+  | SetUserName;

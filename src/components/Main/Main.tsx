@@ -17,6 +17,8 @@ type AppDispatchProps = {
 export const Main = (): JSX.Element => {
   const { changeCity }: AppDispatchProps = useActions();
   const { city } = useTypedSelector((state) => state.currentCity);
+  const { status } = useTypedSelector((state) => state.user);
+  const { userName } = useTypedSelector((state) => state.user);
   const hotels = getSortedHotels(useTypedSelector((state) => state));
 
   const onTabCityClick = useCallback(
@@ -50,12 +52,18 @@ export const Main = (): JSX.Element => {
                 <li className="header__nav-item user">
                   <Link
                     className="header__nav-link header__nav-link--profile"
-                    to={AppRoute.FAVORITES}
+                    to={
+                      status === `NO_AUTH` ? AppRoute.LOGIN : AppRoute.FAVORITES
+                    }
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
+                    {status === `NO_AUTH` ? (
+                      <span className="header__login">Sign in</span>
+                    ) : (
+                      <span className="header__user-name user__name">
+                        {userName}
+                      </span>
+                    )}
                   </Link>
                 </li>
               </ul>

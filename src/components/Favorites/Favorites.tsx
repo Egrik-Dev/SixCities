@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Hotel } from "../../types/index";
 import { FavoriteOfferList } from "../FavoriteOfferList/FavoriteOfferList";
 import { AppRoute } from "../../const";
 import { getUniqueArrayCities } from "../../utils";
 import { FavoritesEmpty } from "../FavoritesEmpty/FavoritesEmpty";
 import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypesSelector";
 
 // ToDo
 // Сделать компоненту заглушку если предложений нет [x]
@@ -21,6 +22,8 @@ const QUANTITY_FAVORITE_OFFERS = 10;
 
 export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
   const { changeCity } = useActions();
+  const { status } = useTypedSelector((state) => state.user);
+  const { userName } = useTypedSelector((state) => state.user);
   const [favoriteOffers, SetFavoriteOffers] = React.useState<[] | Hotel[]>([]);
 
   React.useEffect((): void => {
@@ -36,6 +39,10 @@ export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
   );
 
   const favoriteCities = getUniqueArrayCities(favoriteOffers);
+
+  if (status === `NO_AUTH`) {
+    return <Redirect to={AppRoute.LOGIN} />;
+  }
 
   return (
     <div className="page">
@@ -62,7 +69,7 @@ export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
+                      {userName}
                     </span>
                   </Link>
                 </li>

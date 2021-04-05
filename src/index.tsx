@@ -6,10 +6,13 @@ import { createApi } from "./api";
 import { App } from "./components/App/App";
 import rootReducer from "./state/reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { actionCreators } from "./state";
 
 const root = document.querySelector(`#root`);
 
-export const api = createApi(() => console.log(`No Unauthorized`));
+export const api = createApi(() =>
+  store.dispatch(actionCreators.changeAuthStatus(`NO_AUTH`))
+);
 
 const store = createStore(
   rootReducer,
