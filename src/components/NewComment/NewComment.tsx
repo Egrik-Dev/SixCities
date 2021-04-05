@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import { useActions } from "../../hooks/useActions";
 
 const ratingTitles = new Map([
@@ -25,6 +25,7 @@ export const NewComment = ({
   const [rating, setRating] = React.useState<number | null>();
   const [comment, setComment] = React.useState<string>();
   const { postReview }: NewCommentDispatchProps = useActions();
+  const formRef = createRef<HTMLFormElement>();
 
   const MAX_RATING = 5;
   const MIN_CHARACTERS = 50;
@@ -47,8 +48,10 @@ export const NewComment = ({
   );
 
   const onSubmitForm = React.useCallback(
-    (evt): void => {
+    (evt: React.FormEvent<HTMLFormElement>): void => {
       evt.preventDefault();
+
+      const form = formRef.current;
 
       if (comment && rating) {
         postReview(comment, rating, id)
@@ -56,7 +59,7 @@ export const NewComment = ({
           .then(() => {
             setRating(null);
             setComment(``);
-            evt.target.reset();
+            form?.reset();
           });
       }
     },
@@ -69,6 +72,7 @@ export const NewComment = ({
       action="#"
       method="post"
       onSubmit={onSubmitForm}
+      ref={formRef}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
