@@ -1,4 +1,5 @@
 import React from "react";
+import { useActions } from "../../hooks/useActions";
 
 const ratingTitles = new Map([
   [1, `terribly`],
@@ -8,9 +9,22 @@ const ratingTitles = new Map([
   [5, `perfect`],
 ]);
 
-export const NewComment = (): JSX.Element => {
-  const [rating, setRating] = React.useState<number>();
+type NewCommentProps = {
+  id: string;
+  updateComments: Function;
+};
+
+type NewCommentDispatchProps = {
+  postReview: Function;
+};
+
+export const NewComment = ({
+  id,
+  updateComments,
+}: NewCommentProps): JSX.Element => {
+  const [rating, setRating] = React.useState<number | null>();
   const [comment, setComment] = React.useState<string>();
+  const { postReview }: NewCommentDispatchProps = useActions();
 
   const MAX_RATING = 5;
   const MIN_CHARACTERS = 50;
@@ -33,12 +47,18 @@ export const NewComment = (): JSX.Element => {
   );
 
   const onSubmitForm = React.useCallback(
-    (evt: React.FormEvent): void => {
+    (evt): void => {
       evt.preventDefault();
 
-      console.log(`Коммент отправлен`);
-      console.log(`Рейтинг ${rating}`);
-      console.log(`Комментарий ${comment}`);
+      if (comment && rating) {
+        postReview(comment, rating, id)
+          .then(({ data }: { data: Comment[] }) => updateComments(data))
+          .then(() => {
+            setRating(null);
+            setComment(``);
+            evt.target.reset();
+          });
+      }
     },
     [rating, comment]
   );
@@ -84,6 +104,7 @@ export const NewComment = (): JSX.Element => {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={onChangeText}
+        value={comment}
       ></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

@@ -62,9 +62,12 @@ export const authAction = (email: string, password: string) => (
     dispatch(changeAuthStatus(`AUTH`));
     dispatch(setUserName(email));
   });
-// .then(() => {
-//   dispatch(setUserName(email));
-// });
+
+export const postReview = (comment: string, rating: number, id: string) => (
+  _dispatch: Dispatch,
+  _getState: RootState,
+  api: AxiosInstance
+) => api.post(`/comments/${id}`, { comment, rating });
 
 export const changeCity = (data: string) => ({
   type: ActionTypes.CHANGE_CITY,

@@ -49,6 +49,10 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
     );
   }, [id]);
 
+  const updateComments = React.useCallback((comments) => {
+    setReviews(comments);
+  }, []);
+
   if (!hotel) {
     return <div>Film not found</div>;
   }
@@ -201,7 +205,7 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList reviews={reviews} />
-                <NewComment />
+                <NewComment id={id} updateComments={updateComments} />
               </section>
             </div>
           </div>
