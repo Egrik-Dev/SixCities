@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { AxiosInstance, AxiosResponse } from "axios";
 import { Action } from "../actions";
 import { ActionTypes } from "../action-types";
-import { Hotel, Reviews } from "../../types";
+import { Hotel, Reviews, User } from "../../types";
 import { RootState } from "../reducers";
 
 export const fetchHotels = () => (
@@ -48,7 +48,8 @@ export const checkAuthAction = () => (
   _getState: RootState,
   api: AxiosInstance
 ): void => {
-  api.get(`/login`).then(() => {
+  api.get(`/login`).then(({ data }: { data: User }) => {
+    dispatch(setUserName(data.email));
     dispatch(changeAuthStatus(`AUTH`));
   });
 };

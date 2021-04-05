@@ -33,6 +33,7 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
   const [nearbyHotels, setNearbyHotels] = React.useState<Hotel[]>();
   const { fetchReviews, fetchNearbyHotels }: AppDispatchProps = useActions();
   const { userName } = useTypedSelector((state) => state.user);
+  const { status } = useTypedSelector((state) => state.user);
 
   React.useEffect((): void => {
     raiseOnTheTop();
@@ -205,7 +206,9 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList reviews={reviews} />
-                <NewComment id={id} updateComments={updateComments} />
+                {status === `AUTH` && (
+                  <NewComment id={id} updateComments={updateComments} />
+                )}
               </section>
             </div>
           </div>
