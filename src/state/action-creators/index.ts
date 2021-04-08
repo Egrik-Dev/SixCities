@@ -4,6 +4,7 @@ import { Action } from "../actions";
 import { ActionTypes } from "../action-types";
 import { Hotel, Reviews, User } from "../../types";
 import { RootState } from "../reducers";
+import { updateHotelsList } from "../../utils";
 
 export const fetchHotels = () => (
   dispatch: Dispatch<Action>,
@@ -41,7 +42,7 @@ export const fetchFavoriteHotels = () => (
   _dispatch: Dispatch,
   _getState: () => {},
   api: AxiosInstance
-): Promise<AxiosResponse> => api.get(`/favorite`);
+): Promise<AxiosResponse<Hotel[]>> => api.get(`/favorite`);
 
 export const checkAuthAction = () => (
   dispatch: Dispatch,
@@ -69,6 +70,27 @@ export const postReview = (comment: string, rating: number, id: string) => (
   _getState: RootState,
   api: AxiosInstance
 ) => api.post(`/comments/${id}`, { comment, rating });
+
+export const changeFavoriteStatus = (id: number, status: number) => (
+  _dispatch: Dispatch,
+  _getState: RootState,
+  api: AxiosInstance
+) => api.post(`/favorite/${id}/${status}`);
+
+export const updateHotels = (hotel: Hotel) => (
+  dispatch: Dispatch,
+  getState: () => RootState,
+  _api: AxiosInstance
+) => {
+  const { hotels } = getState().hotels;
+
+  const updatedHotelList = updateHotelsList(hotels, hotel);
+
+  dispatch({
+    type: ActionTypes.UPDATE_HOTELS,
+    payload: updatedHotelList,
+  });
+};
 
 export const changeCity = (data: string) => ({
   type: ActionTypes.CHANGE_CITY,

@@ -56,3 +56,17 @@ export const sortingHotels = (
       return filteredHotels;
   }
 };
+
+export const updateHotelsList = (
+  hotels: Hotel[],
+  updatedHotel: Hotel
+): Hotel[] => {
+  const hotelIndex = hotels.findIndex(
+    (hotel: Hotel) => hotel.id === updatedHotel.id
+  );
+
+  return hotels
+    .slice(0, hotelIndex)
+    .concat(updatedHotel)
+    .concat(hotels.slice(hotelIndex + 1, hotels.length));
+};

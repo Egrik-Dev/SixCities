@@ -27,6 +27,8 @@ export const hotelsReducer = (
       return Object.assign({}, state, { sortType: action.payload });
     case ActionTypes.CHANGE_ACTIVE_OFFER:
       return Object.assign({}, state, { activeOffer: action.payload });
+    case ActionTypes.UPDATE_HOTELS:
+      return Object.assign({}, state, { hotels: action.payload });
     default:
       return state;
   }

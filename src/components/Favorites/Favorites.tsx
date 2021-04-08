@@ -8,27 +8,26 @@ import { FavoritesEmpty } from "../FavoritesEmpty/FavoritesEmpty";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypesSelector";
 
-// ToDo
-// Сделать компоненту заглушку если предложений нет [x]
-// Сделать фетчинг favorites предложений с api
-// Сделать переход на конкретные предложения по клику [x]
-// При клике на город - Сделать переход на главную страницу с выбранным городом [x]
-
 type OwnStateProps = {
   hotels: Hotel[];
 };
 
-const QUANTITY_FAVORITE_OFFERS = 10;
+type FavoritesDispatchProps = {
+  fetchFavoriteHotels: Function;
+};
 
 export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
   const { changeCity } = useActions();
+  const { fetchFavoriteHotels }: FavoritesDispatchProps = useActions();
   const { status } = useTypedSelector((state) => state.user);
   const { userName } = useTypedSelector((state) => state.user);
   const [favoriteOffers, SetFavoriteOffers] = React.useState<[] | Hotel[]>([]);
 
   React.useEffect((): void => {
-    SetFavoriteOffers(hotels.slice(0, QUANTITY_FAVORITE_OFFERS));
-  }, [hotels]);
+    fetchFavoriteHotels().then(({ data }: { data: Hotel[] }) => {
+      SetFavoriteOffers(data);
+    });
+  }, []);
 
   const onCityClick = React.useCallback(
     (evt: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {

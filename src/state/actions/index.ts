@@ -31,10 +31,16 @@ type SetUserName = {
   payload: string;
 };
 
+type UpdateHotels = {
+  type: ActionTypes.UPDATE_HOTELS;
+  payload: Hotel[];
+};
+
 export type Action =
   | ChangeCity
   | LoadHotelsAction
   | ChangeSortType
   | ChangeActiveOffer
   | ChangeAuthStaus
-  | SetUserName;
+  | SetUserName
+  | UpdateHotels;
