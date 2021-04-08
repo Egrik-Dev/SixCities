@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import { Main } from "../Main/Main";
 import { Login } from "../Login/Login";
 import { Favorites } from "../Favorites/Favorites";
@@ -7,6 +7,7 @@ import { Room } from "../Room/Room";
 import { AppRoute } from "../../const";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypesSelector";
+import browserHistory from "../../browser-history";
 
 type AppDispatchProps = {
   fetchHotels: Function;
@@ -30,7 +31,7 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <BrowserRouter>
+    <Router history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
           <Main />
@@ -49,7 +50,7 @@ const App = (): JSX.Element => {
           )}
         />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };
 
