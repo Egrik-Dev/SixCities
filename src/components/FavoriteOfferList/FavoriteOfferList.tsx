@@ -11,11 +11,11 @@ export const FavoriteOfferList = ({ hotels, city }: OwnProps): JSX.Element => {
     return hotels.filter((hotel: Hotel): boolean => hotel.city.name === city);
   };
 
-  const filterdOffers = filterOffersByCity(hotels);
+  const filteredOffers = filterOffersByCity(hotels);
 
   return (
     <>
-      {filterdOffers.map(
+      {filteredOffers.map(
         (hotel: Hotel, i: number): JSX.Element => (
           <FavoriteCard key={i} hotel={hotel} />
         )

@@ -2,7 +2,6 @@ import React from "react";
 import OfferCard from "../OfferCard/OfferCard";
 import { Hotel } from "../../types";
 import { useActions } from "../../hooks/useActions";
-import { useTypedSelector } from "../../hooks/useTypesSelector";
 
 interface OfferListProps {
   hotels: Hotel[];
@@ -12,9 +11,6 @@ interface OfferListProps {
 
 interface OfferListActions {
   changeActiveOffer: Function;
-  changeFavoriteStatus: Function;
-  updateHotels: Function;
-  redirectToRoute: Function;
 }
 
 export const OfferList = ({
@@ -22,32 +18,10 @@ export const OfferList = ({
   classNameMainPage,
   classNameOfferPlace,
 }: OfferListProps) => {
-  const {
-    changeActiveOffer,
-    changeFavoriteStatus,
-    updateHotels,
-    redirectToRoute,
-  }: OfferListActions = useActions();
-
-  const { status } = useTypedSelector((state) => state.user);
+  const { changeActiveOffer }: OfferListActions = useActions();
 
   const onHoverHandler = React.useCallback((hotel: Hotel): void => {
     changeActiveOffer(hotel);
-  }, []);
-
-  const onBookmarkClick = React.useCallback((hotelClicked: Hotel): void => {
-    if (status === `AUTH`) {
-      hotelClicked.is_favorite = !hotelClicked.is_favorite;
-
-      changeFavoriteStatus(
-        hotelClicked.id,
-        Number(hotelClicked.is_favorite)
-      ).then(({ data }: { data: Hotel }) => {
-        updateHotels(data);
-      });
-    } else {
-      redirectToRoute(`/login`);
-    }
   }, []);
 
   return (
@@ -60,7 +34,6 @@ export const OfferList = ({
             isFavorite={hotel.is_favorite}
             onHoverHandler={onHoverHandler}
             className={classNameMainPage}
-            onBookmarkClick={onBookmarkClick}
           />
         )
       )}

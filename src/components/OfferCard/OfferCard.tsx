@@ -3,23 +3,47 @@ import { Link } from "react-router-dom";
 import { Hotel } from "../../types";
 import { calculateRating } from "../../utils";
 import { AppRoute } from "../../const";
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypesSelector";
 
 interface OfferCardProps {
   hotel: Hotel;
   onHoverHandler?: (hotel: Hotel) => void; // Исправить
-  onBookmarkClick: Function;
   className: string;
   isFavorite: boolean;
+}
+
+interface OfferCardActions {
+  updateFavoriteStatus: Function;
+  redirectToRoute: Function;
+  updateHotels: Function;
 }
 
 const OfferCard = ({
   hotel,
   className,
   onHoverHandler,
-  onBookmarkClick,
   isFavorite,
 }: OfferCardProps): JSX.Element => {
   const { preview_image, title, price, rating, type } = hotel;
+  const {
+    updateFavoriteStatus,
+    redirectToRoute,
+    updateHotels,
+  }: OfferCardActions = useActions();
+  const { status } = useTypedSelector((state) => state.user);
+
+  const onBookmarkClick = React.useCallback((hotel: Hotel) => {
+    hotel.is_favorite = !hotel.is_favorite;
+
+    if (status === `AUTH`) {
+      updateFavoriteStatus(hotel).then(({ data }: { data: Hotel }) =>
+        updateHotels(data)
+      );
+    } else {
+      redirectToRoute(`/login`);
+    }
+  }, []);
 
   return (
     <article

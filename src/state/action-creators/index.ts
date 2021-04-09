@@ -71,11 +71,13 @@ export const postReview = (comment: string, rating: number, id: string) => (
   api: AxiosInstance
 ) => api.post(`/comments/${id}`, { comment, rating });
 
-export const changeFavoriteStatus = (id: number, status: number) => (
+export const updateFavoriteStatus = (hotel: Hotel) => (
   _dispatch: Dispatch,
-  _getState: RootState,
+  _getState: () => RootState,
   api: AxiosInstance
-) => api.post(`/favorite/${id}/${status}`);
+) => {
+  return api.post(`/favorite/${hotel.id}/${Number(hotel.is_favorite)}`);
+};
 
 export const updateHotels = (hotel: Hotel) => (
   dispatch: Dispatch,

@@ -12,18 +12,20 @@ import { OfferList } from "../OfferList/OfferList";
 import { useTypedSelector } from "../../hooks/useTypesSelector";
 
 type OwnProps = {
-  hotels: Hotel[];
   id: string;
 };
 
 type AppDispatchProps = {
   fetchReviews: Function; // ToDo: Разобраться как затипизировать
   fetchNearbyHotels: Function;
+  updateFavoriteStatus: Function;
+  updateHotels: Function;
+  redirectToRoute: Function;
 };
 
 const MAX_OFFER_IMAGES = 6;
 
-export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
+export const Room = ({ id }: OwnProps): JSX.Element => {
   const raiseOnTheTop = (): void => {
     window.scrollTo(0, 0);
   };
@@ -31,14 +33,21 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
   const [hotel, setHotel] = React.useState<Hotel>();
   const [reviews, setReviews] = React.useState<Reviews[]>([]);
   const [nearbyHotels, setNearbyHotels] = React.useState<Hotel[]>();
-  const { fetchReviews, fetchNearbyHotels }: AppDispatchProps = useActions();
+  const {
+    fetchReviews,
+    fetchNearbyHotels,
+    updateFavoriteStatus,
+    updateHotels,
+    redirectToRoute,
+  }: AppDispatchProps = useActions();
   const { userName } = useTypedSelector((state) => state.user);
   const { status } = useTypedSelector((state) => state.user);
+  const { hotels } = useTypedSelector((state) => state.hotels);
 
   React.useEffect((): void => {
     raiseOnTheTop();
     setHotel(hotels.find((hotel: Hotel): boolean => hotel.id === Number(id)));
-  }, [hotels, id]);
+  }, [id]);
 
   React.useEffect((): void => {
     fetchReviews(id).then(({ data }: { data: Reviews[] }) => setReviews(data));
@@ -54,6 +63,18 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
     setReviews(comments);
   }, []);
 
+  const onBookmarkClick = React.useCallback((hotel: Hotel) => {
+    hotel.is_favorite = !hotel.is_favorite;
+
+    if (status === `AUTH`) {
+      updateFavoriteStatus(hotel).then(({ data }: { data: Hotel }) =>
+        updateHotels(data)
+      );
+    } else {
+      redirectToRoute(`/login`);
+    }
+  }, []);
+
   if (!hotel) {
     return <div>Film not found</div>;
   }
@@ -62,6 +83,7 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
     images,
     title,
     is_premium,
+    is_favorite,
     rating,
     type,
     bedrooms,
@@ -131,8 +153,13 @@ export const Room = ({ hotels, id }: OwnProps): JSX.Element => {
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
                 <button
-                  className="property__bookmark-button button"
+                  className={
+                    is_favorite
+                      ? `property__bookmark-button property__bookmark-button--active button`
+                      : `property__bookmark-button button`
+                  }
                   type="button"
+                  onClick={() => onBookmarkClick(hotel)}
                 >
                   <svg
                     className="property__bookmark-icon"

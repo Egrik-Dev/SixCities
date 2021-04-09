@@ -2,21 +2,35 @@ import { calculateRating } from "../../utils";
 import { Hotel } from "../../types/index";
 import { Link } from "react-router-dom";
 import { AppRoute } from "../../const";
+import React from "react";
+import { useActions } from "../../hooks/useActions";
 
 interface OwnProps {
   hotel: Hotel;
 }
 
+interface FavoriteCardActions {
+  updateFavoriteStatus: Function;
+  redirectToRoute: Function;
+  updateHotels: Function;
+}
+
 export const FavoriteCard = (props: OwnProps): JSX.Element => {
+  const { hotel } = props;
+  const { title, price, is_favorite, rating, type, preview_image, id } = hotel;
+
   const {
-    title,
-    price,
-    is_favorite,
-    rating,
-    type,
-    preview_image,
-    id,
-  } = props.hotel;
+    updateFavoriteStatus,
+    updateHotels,
+  }: FavoriteCardActions = useActions();
+
+  const onBookmarkClick = React.useCallback((hotel: Hotel) => {
+    hotel.is_favorite = !hotel.is_favorite;
+
+    updateFavoriteStatus(hotel).then(({ data }: { data: Hotel }) =>
+      updateHotels(data)
+    );
+  }, []);
 
   return (
     <article className="favorites__card place-card">
@@ -38,6 +52,7 @@ export const FavoriteCard = (props: OwnProps): JSX.Element => {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
+            onClick={() => onBookmarkClick(hotel)}
             className={
               is_favorite
                 ? `place-card__bookmark-button place-card__bookmark-button--active button`

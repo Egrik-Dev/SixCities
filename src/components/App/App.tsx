@@ -18,7 +18,6 @@ const App = (): JSX.Element => {
   const [loadingFlag, setLoadingFlag] = React.useState(true);
   const { fetchHotels }: AppDispatchProps = useActions();
   const { checkAuthAction }: AppDispatchProps = useActions();
-  const { hotels } = useTypedSelector((state) => state.hotels);
 
   React.useEffect((): void => {
     Promise.all([fetchHotels(), checkAuthAction()]).then(() =>
@@ -40,14 +39,12 @@ const App = (): JSX.Element => {
           <Login />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <Favorites hotels={hotels} />
+          <Favorites />
         </Route>
         <Route
           exact
           path={`${AppRoute.OFFER}/:id`}
-          render={(offerProps: any) => (
-            <Room hotels={hotels} id={offerProps.match.params.id} />
-          )}
+          render={(offerProps: any) => <Room id={offerProps.match.params.id} />}
         />
       </Switch>
     </Router>

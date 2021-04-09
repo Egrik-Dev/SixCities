@@ -8,26 +8,22 @@ import { FavoritesEmpty } from "../FavoritesEmpty/FavoritesEmpty";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypesSelector";
 
-type OwnStateProps = {
-  hotels: Hotel[];
-};
-
 type FavoritesDispatchProps = {
   fetchFavoriteHotels: Function;
 };
 
-export const Favorites = ({ hotels }: OwnStateProps): JSX.Element => {
+export const Favorites = (): JSX.Element => {
   const { changeCity } = useActions();
   const { fetchFavoriteHotels }: FavoritesDispatchProps = useActions();
-  const { status } = useTypedSelector((state) => state.user);
-  const { userName } = useTypedSelector((state) => state.user);
+  const { status, userName } = useTypedSelector((state) => state.user);
+  const { hotels } = useTypedSelector((state) => state.hotels);
   const [favoriteOffers, SetFavoriteOffers] = React.useState<[] | Hotel[]>([]);
 
   React.useEffect((): void => {
     fetchFavoriteHotels().then(({ data }: { data: Hotel[] }) => {
       SetFavoriteOffers(data);
     });
-  }, []);
+  }, [hotels]);
 
   const onCityClick = React.useCallback(
     (evt: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
