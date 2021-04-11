@@ -34,9 +34,8 @@ const OfferCard = ({
   const { status } = useTypedSelector((state) => state.user);
 
   const onBookmarkClick = React.useCallback((hotel: Hotel) => {
-    hotel.is_favorite = !hotel.is_favorite;
-
     if (status === `AUTH`) {
+      hotel.is_favorite = !hotel.is_favorite;
       updateFavoriteStatus(hotel).then(({ data }: { data: Hotel }) =>
         updateHotels(data)
       );

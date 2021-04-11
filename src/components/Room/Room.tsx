@@ -24,6 +24,7 @@ type AppDispatchProps = {
 };
 
 const MAX_OFFER_IMAGES = 6;
+const MAX_REVIEWS = 10;
 
 export const Room = ({ id }: OwnProps): JSX.Element => {
   const raiseOnTheTop = (): void => {
@@ -44,13 +45,25 @@ export const Room = ({ id }: OwnProps): JSX.Element => {
   const { status } = useTypedSelector((state) => state.user);
   const { hotels } = useTypedSelector((state) => state.hotels);
 
+  const sortReviews = (reviewsList: Reviews[]): Reviews[] => {
+    return reviewsList
+      .sort(
+        (a: Reviews, b: Reviews): any =>
+          Date.parse(String(b.date)) - Date.parse(String(a.date))
+      )
+      .slice(0, MAX_REVIEWS);
+  };
+
   React.useEffect((): void => {
     raiseOnTheTop();
     setHotel(hotels.find((hotel: Hotel): boolean => hotel.id === Number(id)));
   }, [id]);
 
   React.useEffect((): void => {
-    fetchReviews(id).then(({ data }: { data: Reviews[] }) => setReviews(data));
+    fetchReviews(id).then(({ data }: { data: Reviews[] }) => {
+      const sortedReviews = sortReviews(data);
+      setReviews(sortedReviews);
+    });
   }, [id]);
 
   React.useEffect((): void => {
@@ -60,13 +73,13 @@ export const Room = ({ id }: OwnProps): JSX.Element => {
   }, [id]);
 
   const updateComments = React.useCallback((comments) => {
-    setReviews(comments);
+    const sortedReviews = sortReviews(comments);
+    setReviews(sortedReviews);
   }, []);
 
   const onBookmarkClick = React.useCallback((hotel: Hotel) => {
-    hotel.is_favorite = !hotel.is_favorite;
-
     if (status === `AUTH`) {
+      hotel.is_favorite = !hotel.is_favorite;
       updateFavoriteStatus(hotel).then(({ data }: { data: Hotel }) =>
         updateHotels(data)
       );
@@ -76,7 +89,7 @@ export const Room = ({ id }: OwnProps): JSX.Element => {
   }, []);
 
   if (!hotel) {
-    return <div>Film not found</div>;
+    return <div>Hotel not found</div>;
   }
 
   const {
@@ -118,12 +131,18 @@ export const Room = ({ id }: OwnProps): JSX.Element => {
                 <li className="header__nav-item user">
                   <Link
                     className="header__nav-link header__nav-link--profile"
-                    to={AppRoute.FAVORITES}
+                    to={
+                      status === `NO_AUTH` ? AppRoute.LOGIN : AppRoute.FAVORITES
+                    }
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      {userName}
-                    </span>
+                    {status === `NO_AUTH` ? (
+                      <span className="header__login">Sign in</span>
+                    ) : (
+                      <span className="header__user-name user__name">
+                        {userName}
+                      </span>
+                    )}
                   </Link>
                 </li>
               </ul>
