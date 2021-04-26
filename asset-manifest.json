@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/SixCities/static/js/main.3b8a5164.chunk.js",
-    "main.js.map": "/SixCities/static/js/main.3b8a5164.chunk.js.map",
+    "main.js": "/SixCities/static/js/main.0409dae8.chunk.js",
+    "main.js.map": "/SixCities/static/js/main.0409dae8.chunk.js.map",
     "runtime-main.js": "/SixCities/static/js/runtime-main.8d861cb3.js",
     "runtime-main.js.map": "/SixCities/static/js/runtime-main.8d861cb3.js.map",
     "static/css/2.c1e28d34.chunk.css": "/SixCities/static/css/2.c1e28d34.chunk.css",
-    "static/js/2.c9c4f48c.chunk.js": "/SixCities/static/js/2.c9c4f48c.chunk.js",
-    "static/js/2.c9c4f48c.chunk.js.map": "/SixCities/static/js/2.c9c4f48c.chunk.js.map",
+    "static/js/2.3e0aa02d.chunk.js": "/SixCities/static/js/2.3e0aa02d.chunk.js",
+    "static/js/2.3e0aa02d.chunk.js.map": "/SixCities/static/js/2.3e0aa02d.chunk.js.map",
     "index.html": "/SixCities/index.html",
     "static/css/2.c1e28d34.chunk.css.map": "/SixCities/static/css/2.c1e28d34.chunk.css.map",
-    "static/js/2.c9c4f48c.chunk.js.LICENSE.txt": "/SixCities/static/js/2.c9c4f48c.chunk.js.LICENSE.txt"
+    "static/js/2.3e0aa02d.chunk.js.LICENSE.txt": "/SixCities/static/js/2.3e0aa02d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8d861cb3.js",
     "static/css/2.c1e28d34.chunk.css",
-    "static/js/2.c9c4f48c.chunk.js",
-    "static/js/main.3b8a5164.chunk.js"
+    "static/js/2.3e0aa02d.chunk.js",
+    "static/js/main.0409dae8.chunk.js"
   ]
 }
