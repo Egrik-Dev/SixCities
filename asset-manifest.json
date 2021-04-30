@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/SixCities/static/js/main.74a0c868.chunk.js",
-    "main.js.map": "/SixCities/static/js/main.74a0c868.chunk.js.map",
+    "main.js": "/SixCities/static/js/main.4f615094.chunk.js",
+    "main.js.map": "/SixCities/static/js/main.4f615094.chunk.js.map",
     "runtime-main.js": "/SixCities/static/js/runtime-main.8d861cb3.js",
     "runtime-main.js.map": "/SixCities/static/js/runtime-main.8d861cb3.js.map",
     "static/js/2.07fe87eb.chunk.js": "/SixCities/static/js/2.07fe87eb.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.8d861cb3.js",
     "static/js/2.07fe87eb.chunk.js",
-    "static/js/main.74a0c868.chunk.js"
+    "static/js/main.4f615094.chunk.js"
   ]
 }
