@@ -11,7 +11,6 @@ interface OwnProps {
 
 interface FavoriteCardActions {
   updateFavoriteStatus: Function;
-  redirectToRoute: Function;
   updateHotels: Function;
 }
 

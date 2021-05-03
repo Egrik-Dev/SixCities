@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Hotel } from "../../types";
 import { calculateRating } from "../../utils";
 import { AppRoute } from "../../const";
@@ -15,7 +15,6 @@ interface OfferCardProps {
 
 interface OfferCardActions {
   updateFavoriteStatus: Function;
-  redirectToRoute: Function;
   updateHotels: Function;
 }
 
@@ -28,10 +27,10 @@ const OfferCard = ({
   const { preview_image, title, price, rating, type } = hotel;
   const {
     updateFavoriteStatus,
-    redirectToRoute,
     updateHotels,
   }: OfferCardActions = useActions();
   const { status } = useTypedSelector((state) => state.user);
+  const history = useHistory();
 
   const onBookmarkClick = React.useCallback((hotel: Hotel) => {
     if (status === `AUTH`) {
@@ -40,7 +39,7 @@ const OfferCard = ({
         updateHotels(data)
       );
     } else {
-      redirectToRoute(`/login`);
+      history.push(`/login`)
     }
   }, []);
 

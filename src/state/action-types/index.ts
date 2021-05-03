@@ -5,6 +5,5 @@ export enum ActionTypes {
   CHANGE_ACTIVE_OFFER = `change_active_offer`,
   CHANGE_AUTH_STATUS = `change_auth_status`,
   SET_USER_NAME = `set_user_name`,
-  UPDATE_HOTELS = `update_hotels`,
-  REDIRECT_TO_ROUTE = `redirect_to_route`,
+  UPDATE_HOTELS = `update_hotels`
 }

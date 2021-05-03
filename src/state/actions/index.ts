@@ -36,11 +36,6 @@ type UpdateHotels = {
   payload: Hotel[];
 };
 
-type RedirectToRoute = {
-  type: ActionTypes.REDIRECT_TO_ROUTE;
-  payload: string;
-};
-
 export type Action =
   | ChangeCity
   | LoadHotelsAction
@@ -48,5 +43,4 @@ export type Action =
   | ChangeActiveOffer
   | ChangeAuthStaus
   | SetUserName
-  | UpdateHotels
-  | RedirectToRoute;
+  | UpdateHotels;

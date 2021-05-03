@@ -7,7 +7,6 @@ import { App } from "./components/App/App";
 import rootReducer from "./state/reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { actionCreators } from "./state";
-import { redirect } from "./middlewares/redirect";
 
 const root = document.querySelector(`#root`);
 
@@ -18,8 +17,7 @@ export const api = createApi(() =>
 const store = createStore(
   rootReducer,
   composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api)),
-    applyMiddleware(redirect)
+    applyMiddleware(thunk.withExtraArgument(api))
   )
 );
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Hotel, Reviews } from "../../types";
 import { calculateRating } from "../../utils";
 import { OfferImage } from "../OfferImage/OfferImage";
@@ -20,7 +20,6 @@ type AppDispatchProps = {
   fetchNearbyHotels: Function;
   updateFavoriteStatus: Function;
   updateHotels: Function;
-  redirectToRoute: Function;
 };
 
 const MAX_OFFER_IMAGES = 6;
@@ -39,11 +38,11 @@ export const Room = ({ id }: OwnProps): JSX.Element => {
     fetchNearbyHotels,
     updateFavoriteStatus,
     updateHotels,
-    redirectToRoute,
   }: AppDispatchProps = useActions();
   const { userName } = useTypedSelector((state) => state.user);
   const { status } = useTypedSelector((state) => state.user);
   const { hotels } = useTypedSelector((state) => state.hotels);
+  const history = useHistory();
 
   const sortReviews = (reviewsList: Reviews[]): Reviews[] => {
     return reviewsList
@@ -84,7 +83,7 @@ export const Room = ({ id }: OwnProps): JSX.Element => {
         updateHotels(data)
       );
     } else {
-      redirectToRoute(`/login`);
+      history.push(`/login`)
     }
   }, []);
 

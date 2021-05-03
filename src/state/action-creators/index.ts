@@ -118,8 +118,3 @@ export const setUserName = (userName: string) => ({
   type: ActionTypes.SET_USER_NAME,
   payload: userName,
 });
-
-export const redirectToRoute = (path: string) => ({
-  type: ActionTypes.REDIRECT_TO_ROUTE,
-  payload: path,
-});
